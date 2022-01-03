@@ -6,7 +6,7 @@ int main (){
 
     for(int i = 0; i < CONST; i++){
 
-    printf("\n Goodby\n");
+    printf("\n Goodbye\n");
 
     }
 
