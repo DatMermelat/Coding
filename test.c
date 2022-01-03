@@ -1,14 +1,16 @@
 #include <stdio.h>
-
-#define CONST 10
+#include "suma.h"
 
 int main (){
 
-    for(int i = 0; i < CONST; i++){
+    int a, b;
 
-    printf("\n Goodbye\n");
+    printf("\n Introduce dos numeros \n");
 
-    }
+    scanf("%d", &a);
+    scanf("%d", &b);
+
+    printf("\n %d \n", suma(a,b));
 
     return 0;
 }
