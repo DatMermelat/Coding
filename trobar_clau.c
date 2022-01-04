@@ -13,7 +13,7 @@
 int main (int argc, char *argv[]){ 
 
     int generacions = DEF_GENER;
-    int crom = DEF_CROM ;
+    int crom = DEF_CROM;
     float prob_m = DEF_PROB_M;
     int k = DEF_TOUR_SEL;
     int args_tractats;
@@ -23,25 +23,25 @@ int main (int argc, char *argv[]){
 
         while ((argc - args_tractats) > 0){
                
-               if (strcmp(argv[args_tractats],'-g') == 0){
+               if (strcmp(argv[args_tractats], '-g') == 0){
                   
                    generacions = atoi(argv[argc + 1]);
-                   args_tractats =+ 2; 
+                   args_tractats += 2; 
                } 
                else if (strcmp(argv[args_tractats],'-c') == 0){
 
                    crom = atoi(argv[argc + 1]);
-                   args_tractats =+ 2;
+                   args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],'-prob') == 0){
 
                    prob_m = atof(argv[argc + 1]);
-                   args_tractats =+ 2;
+                   args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],'-k') == 0){
 
                    k = atoi(argv[argc + 1]);
-                   args_tractats =+ 2;
+                   args_tractats += 2;
                }
                else{
 
