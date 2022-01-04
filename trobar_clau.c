@@ -46,7 +46,7 @@ int main (int argc, char *argv[]){
                else{
 
                    printf("\n ERROR: Argument desconegut\n");
-                   printf("\n Les comandes reconegudes son:\n")
+                   printf("\n Les comandes reconegudes son:\n");
                    printf("-g  generacions \n -c  cromosomes \n -prob  probabilitat de mutacio \n -k  cromosomes per el tournament selection \n");
 
                    return -1;
