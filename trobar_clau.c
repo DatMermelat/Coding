@@ -56,9 +56,9 @@ int main (int argc, char* argv[]){
          
     }
 
-    printf("\n Dades introduïdes:\n");
+    printf("\nDades introduïdes:\n");
 
-    printf("\ngeneracions %d  cromosomes %d  probabilitat de mutacion %.4f  cromosomes pel tour.sel. %d \n", generacions, crom, prob_m, tour_sel);
+    printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, crom, prob_m, tour_sel);
  
     return 0;
 }
