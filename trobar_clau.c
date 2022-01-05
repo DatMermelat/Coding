@@ -76,8 +76,9 @@ int main (int argc, char* argv[]){
     
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < N_GENS; j++){
+            taula_croms[i].gens[j] = rand();
             printf("%d ",taula_croms[i].gens[j]);
-            if (j == N_GENS - 1){
+            if (j == N_GENS - 1 ){
                 printf("\n");
             }
         }
