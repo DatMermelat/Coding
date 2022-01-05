@@ -18,6 +18,8 @@ int main (int argc, char* argv[]){
     int tour_sel = DEF_TOUR_SEL;
     int args_tractats;
 
+    srand(time(NULL)); 
+
     if (argc > 1){
         args_tractats = 1;
 
