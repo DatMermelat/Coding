@@ -40,7 +40,7 @@ int main (int argc, char* argv[]){
                }
                else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
 
-                   k = atoi(argv[args_tractats + 1]);
+                   tour_sel = atoi(argv[args_tractats + 1]);
                    args_tractats += 2;
                }
                else{
@@ -56,7 +56,7 @@ int main (int argc, char* argv[]){
          
     }
 
-    printf("\n Dades introduïdes:\n")
+    printf("\n Dades introduïdes:\n");
 
     printf("\ngenerscions %d  cromosomes %d  probabilitat de mutacion %.4f  cromosomes pel tour.sel. %d \n", generacions, crom, prob_m, tour_sel);
  
