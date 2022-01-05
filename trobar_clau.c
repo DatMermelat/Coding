@@ -17,7 +17,7 @@ int main (int argc, char* argv[]){
 
     int generacions = DEF_GENER;
     int cromosomes = DEF_CROM;
-    float prob_m = DEF_PROB_M;lo
+    float prob_m = DEF_PROB_M;
     int tour_sel = DEF_TOUR_SEL;
     int args_tractats;
     Crom *taula_croms;
