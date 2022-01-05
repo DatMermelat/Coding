@@ -9,7 +9,7 @@ int main (){
     srand(time(NULL));
 
     aleatori = rand();
-    aleatori01 = (float) aleatori / RAND_MAX;
+    // aleatori01 = (float) aleatori / RAND_MAX;
 
-    printf ("\n %f \n", aleatori01);
+    printf ("\n %d  \n", RAND_MAX);
 }
