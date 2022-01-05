@@ -8,17 +8,22 @@
 #define DEF_GENER 100 //Nombre de generacions per defecte
 #define DEF_CROM 40 //Nombre de cromosomes per defecte
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
-#define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte 
+#define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
+#define N_GENS 30
+
+typedef struct Crom{int gens[N_GENS];} Crom;
 
 int main (int argc, char* argv[]){ 
 
     int generacions = DEF_GENER;
-    int crom = DEF_CROM;
-    float prob_m = DEF_PROB_M;
+    int cromosomes = DEF_CROM;
+    float prob_m = DEF_PROB_M;lo
     int tour_sel = DEF_TOUR_SEL;
     int args_tractats;
+    Crom *taula_croms;
 
-    srand(time(NULL)); 
+
+    srand(time(NULL));  
 
     if (argc > 1){
         args_tractats = 1;
@@ -32,7 +37,7 @@ int main (int argc, char* argv[]){
                } 
                else if (strcmp(argv[args_tractats],"-c") == 0){ //Nombre de cromosomes 
 
-                   crom = atoi(argv[args_tractats + 1]);
+                   cromosomes = atoi(argv[args_tractats + 1]);
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
@@ -60,7 +65,11 @@ int main (int argc, char* argv[]){
 
     printf("\nDades introduïdes:\n");
 
-    printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, crom, prob_m, tour_sel);
+    printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, cromosomes, prob_m, tour_sel);
+
+    taula_croms = (Crom *) malloc(cromosomes * sizeof(Crom));
+
+    
  
     return 0;
 }
