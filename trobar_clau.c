@@ -80,6 +80,7 @@ int main (int argc, char* argv[]){
             
             aleatori = rand();
             aleatori01 = (float) aleatori / RAND_MAX;
+            round(aleatori01);
             
             taula_croms[i].gens[j] = aleatori01;
             
