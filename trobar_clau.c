@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include "algorisme_genetic.h"
 
 #define DEF_GENER 100 //Nombre de generacionsper per defecte
 #define DEF_CROM 40 //Nombre de cromosomes per defecte
