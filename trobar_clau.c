@@ -77,11 +77,14 @@ int main (int argc, char* argv[]){
     
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < N_GENS; j++){
+            
             aleatori = rand();
             aleatori01 = (float) aleatori / RAND_MAX;
-            round(aleatori01);
+            
             taula_croms[i].gens[j] = aleatori01;
+            
             printf("%d ",taula_croms[i].gens[j]);
+            
             if (j == N_GENS - 1){
                 printf("\n");
             }
