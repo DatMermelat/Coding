@@ -11,5 +11,5 @@ int main (){
     aleatori = rand();
     aleatori01 = (float) aleatori / RAND_MAX;
 
-    printf ("\n %d \n", aleatori01);
+    printf ("\n %f \n", aleatori01);
 }
