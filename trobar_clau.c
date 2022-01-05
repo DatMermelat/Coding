@@ -75,10 +75,10 @@ int main (int argc, char* argv[]){
     }
     
     for(int i = 0; i < cromosomes; i++){
-        for(int j = 0; j < NUM_GENS; j++){
+        for(int j = 0; j < N_GENS; j++){
 
             printf("%d ",taula_croms[i].gens[j]);
-            if (j == NUM_GENS){
+            if (j == N_GENS){
                 printf("\n");
             }
         }
