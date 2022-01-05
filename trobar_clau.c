@@ -19,7 +19,8 @@ int main (int argc, char* argv[]){
     int cromosomes = DEF_CROM;
     float prob_m = DEF_PROB_M;
     int tour_sel = DEF_TOUR_SEL;
-    int args_tractats;
+    int args_tractats, aleatori;
+    float aleatori01;
     Crom *taula_croms;
 
 
@@ -76,9 +77,12 @@ int main (int argc, char* argv[]){
     
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < N_GENS; j++){
-            taula_croms[i].gens[j] = rand();
+            aleatori = rand();
+            aleatori01 = (float)aleatori/RAND_MAX;
+            round(aletori01);
+            taula_croms[i].gens[j] = aleatori01;
             printf("%d ",taula_croms[i].gens[j]);
-            if (j == N_GENS - 1 ){
+            if (j == N_GENS - 1){
                 printf("\n");
             }
         }
