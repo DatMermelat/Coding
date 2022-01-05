@@ -3,14 +3,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include "algorisme_genetic.h"
 
 #define DEF_GENER 100 //Nombre de generacionsper per defecte
 #define DEF_CROM 40 //Nombre de cromosomes per defecte
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte 
 
-int main (int argc, char *argv[]){ 
+int main (int argc, char* argv[]){ 
 
     int generacions = DEF_GENER;
     int crom = DEF_CROM;
@@ -23,7 +22,7 @@ int main (int argc, char *argv[]){
 
         while ((argc - args_tractats) > 0){
                
-               if (strcmp(argv[args_tractats], '-g') == 0){
+               if (strcmp(argv[args_tractats],'-g') == 0){
                   
                    generacions = atoi(argv[argc + 1]);
                    args_tractats += 2; 
@@ -56,7 +55,7 @@ int main (int argc, char *argv[]){
          
     }
 
-    printf("gen %d  crom %d  prob %.4f  k %d", generacions, crom, prob_m, k);
+    printf("gen %d  crom %d  prob %.4f  k %d \n", generacions, crom, prob_m, k);
  
     return 0;
 }
