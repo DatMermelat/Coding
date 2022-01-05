@@ -73,6 +73,8 @@ int main (int argc, char* argv[]){
         printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes, introdueix un numero de cromosomes mes petit\n");
         return -1;
     }
+
+    printf("%d\n", taula_croms[3].gens[5]);
    
     free(taula_croms);
     return 0;
