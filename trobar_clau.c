@@ -24,22 +24,22 @@ int main (int argc, char* argv[]){
                
                if (strcmp(argv[args_tractats],"-g") == 0){
                   
-                   generacions = atoi(argv[argc + 1]);
+                   generacions = atoi(argv[args_tractats + 1]);
                    args_tractats += 2; 
                } 
                else if (strcmp(argv[args_tractats],"-c") == 0){
 
-                   crom = atoi(argv[argc + 1]);
+                   crom = atoi(argv[args_tractats + 1]);
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-prob") == 0){
 
-                   prob_m = atof(argv[argc + 1]);
+                   prob_m = atof(argv[args_tractats + 1]);
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-k") == 0){
 
-                   k = atoi(argv[argc + 1]);
+                   k = atoi(argv[args_tractats + 1]);
                    args_tractats += 2;
                }
                else{
