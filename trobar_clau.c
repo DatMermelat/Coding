@@ -11,18 +11,18 @@
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 30
 
-typedef struct Crom{int gens[N_GENS];} Crom;
-
 int main (int argc, char* argv[]){ 
-
+    //Variables pels command-line args  
     int generacions = DEF_GENER;
     int cromosomes = DEF_CROM;
-    float prob_m = DEF_PROB_M;
     int tour_sel = DEF_TOUR_SEL;
-    int args_tractats;
+    float prob_m = DEF_PROB_M;
+    //Variables per la generacio dels gens
     float aleatori01;
-    Crom *taula_croms;
-
+    //Altres variables
+    int args_tractats;
+    //Taules 
+    int ** taula_croms;
 
     srand(time(NULL));  
 
@@ -68,23 +68,32 @@ int main (int argc, char* argv[]){
 
     printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, cromosomes, prob_m, tour_sel);
 
-    taula_croms = (Crom *) malloc(cromosomes * sizeof(Crom));
+    //Crearcio de taules dinamiques i comprovacions
+
+    taula_croms = (int **) malloc(cromosomes * sizeof(int *));
 
     if (taula_croms == NULL){
-        printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes, introdueix un numero de cromosomes mes petit\n");
+        printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
+        printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
         return -1;
+    }
+
+    for(int i = 0; i < cromosomes; i++){
+        taula_croms[i] = (int *) malloc(N_GENS * sizeof (int));
+        
+        if (taula_croms[i] == NULL){
+            printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
+            printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
+            return -1;
+        }
     }
     
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < N_GENS; j++){
+                 
+            taula_croms[i][j] = round(aleatori01);
             
-            
-            aleatori01 = rand() / RAND_MAX;
-            
-            
-            taula_croms[i].gens[j] = round(aleatori01);
-            
-            printf("%d ",taula_croms[i].gens[j]);
+            printf("%d ",taula_croms[i][j]);
             
             if (j == N_GENS - 1){
                 printf("\n");
