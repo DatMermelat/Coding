@@ -14,7 +14,7 @@
 void imprimir_matriu (int ** matriu, int num_fil, int num_col){
     for (int i = 0; i < num_fil; i++){
         for (int j = 0; j < num_col; j++){
-            printf ("%d ", matriu[i][j])
+            printf ("%d ", matriu[i][j]);
             if (j == num_col - 1){
                 printf ("\n");
             }
