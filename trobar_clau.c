@@ -11,6 +11,18 @@
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 30
 
+void imprimir_matriu (int matriu[][], int num_fil, int num_col){
+    for (int i = 0; i < num_fil; i++){
+        for (int j = 0; j < num_col; j++){
+            printf ("%d ", matriu[i][j])
+            if (j == num_col - 1){
+                printf ("\n");
+            }
+        }
+    }
+
+}
+
 int main (int argc, char* argv[]){ 
     //Variables pels command-line args  
     int generacions = DEF_GENER;
@@ -23,13 +35,15 @@ int main (int argc, char* argv[]){
     int args_tractats;
     //Taules 
     int ** taula_croms;
+    int ** croms_ts;
 
     srand(time(NULL));  
 
+    //Llegir els command-line args 
     if (argc > 1){
         args_tractats = 1;
 
-        while ((argc - args_tractats) > 0){ //Llegir els command-line args
+        while ((argc - args_tractats) > 0){
                
                if (strcmp(argv[args_tractats],"-g") == 0){ //Nombre de generacions 
                   
@@ -53,8 +67,8 @@ int main (int argc, char* argv[]){
                }
                else{
 
-                   printf("\n ERROR: Argument desconegut\n");
-                   printf("\n Les comandes reconegudes son:\n");
+                   printf("\nERROR: Argument desconegut\n");
+                   printf("\nLes comandes reconegudes son:\n");
                    printf("-g  generacions \n-c  cromosomes \n-prob  probabilitat de mutacio \n-ts  cromosomes pel tournament selection \n");
 
                    return -1;
@@ -71,15 +85,20 @@ int main (int argc, char* argv[]){
     //Crearcio de taules dinamiques i comprovacions
 
     taula_croms = (int **) malloc(cromosomes * sizeof(int *));
+    croms_ts = (int **) malloc(tour_sel * sizeof(int *));
 
-    if (taula_croms == NULL){
+    if (taula_croms == NULL || croms_ts == NULL){
         printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
         printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
         return -1;
     }
 
+    for (int i = 0; i < tour_sel; i++){
+        croms_ts[i] = (int *) malloc(N_GENS * sizeof(int));
+    }
+
     for(int i = 0; i < cromosomes; i++){
-        taula_croms[i] = (int *) malloc(N_GENS * sizeof (int));
+        taula_croms[i] = (int *) malloc(N_GENS * sizeof(int));
         
         if (taula_croms[i] == NULL){
             printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
@@ -88,18 +107,13 @@ int main (int argc, char* argv[]){
         }
     }
     
-    for(int i = 0; i < cromosomes; i++){
+    for(int i = 0; i < tour_selr; i++){
         for(int j = 0; j < N_GENS; j++){
-                 
-            taula_croms[i][j] = round((float) rand() / RAND_MAX);
-            
-            printf("%d ",taula_croms[i][j]);
-            
-            if (j == N_GENS - 1){
-                printf("\n");
-            }
+            taula_croms[i][j] = round((float)rand() / RAND_MAX);            
         }
     }
+
+    imprimir_matriu(taula_croms, tour_sel, N_GENS);
    
     free(taula_croms);
     return 0;
