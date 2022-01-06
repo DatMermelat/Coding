@@ -10,6 +10,7 @@
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 30
+#define RAND_MAX 2147483647
 
 typedef struct Crom{int gens[N_GENS];} Crom;
 
