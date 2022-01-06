@@ -78,8 +78,8 @@ int main (int argc, char* argv[]){
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < N_GENS; j++){
             
-            aleatori = rand();
-            aleatori01 = (float) aleatori/ RAND_MAX;
+            
+            aleatori01 = rand() / RAND_MAX;
             
             
             taula_croms[i].gens[j] = round(aleatori01);
