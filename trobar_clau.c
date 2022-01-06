@@ -11,7 +11,7 @@
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 30
 
-void imprimir_matriu (int matriu[][], int num_fil, int num_col){
+void imprimir_matriu (int * matriu, int num_fil, int num_col){
     for (int i = 0; i < num_fil; i++){
         for (int j = 0; j < num_col; j++){
             printf ("%d ", matriu[i][j])
@@ -107,7 +107,7 @@ int main (int argc, char* argv[]){
         }
     }
     
-    for(int i = 0; i < tour_selr; i++){
+    for(int i = 0; i < tour_sel; i++){
         for(int j = 0; j < N_GENS; j++){
             taula_croms[i][j] = round((float)rand() / RAND_MAX);            
         }
