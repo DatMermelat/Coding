@@ -79,10 +79,10 @@ int main (int argc, char* argv[]){
         for(int j = 0; j < N_GENS; j++){
             
             aleatori = rand();
-            aleatori01 = (float aleatori) / RAND_MAX;
-            round(aleatori01);
+            aleatori01 = (float) aleatori/ RAND_MAX;
             
-            taula_croms[i].gens[j] = aleatori01;
+            
+            taula_croms[i].gens[j] = round(aleatori01);
             
             printf("%d ",taula_croms[i].gens[j]);
             
