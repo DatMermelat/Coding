@@ -19,7 +19,7 @@ int main (int argc, char* argv[]){
     int cromosomes = DEF_CROM;
     float prob_m = DEF_PROB_M;
     int tour_sel = DEF_TOUR_SEL;
-    int args_tractats, aleatori;
+    int args_tractats;
     float aleatori01;
     Crom *taula_croms;
 
