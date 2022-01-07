@@ -29,7 +29,7 @@ int main (int argc, char* argv[]){
     int cromosomes = DEF_CROM;
     int tour_sel = DEF_TOUR_SEL;
     float prob_m = DEF_PROB_M;
-    //Variables per generacio de nombres alestoris
+    //Variables per generacio de nombres aleatoris
     float aleatori01;
     //Altres variables
     int args_tractats;
