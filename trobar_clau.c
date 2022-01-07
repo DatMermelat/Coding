@@ -101,7 +101,7 @@ int main (int argc, char* argv[]){
     for (int i = 0; i < tour_sel; i++){
         croms_ts[i] = (int *) malloc(N_GENS * sizeof(int));
         
-        if(corms_ts[i] == NULL){
+        if(croms_ts[i] == NULL){
             printf ("\nERROR: No hi ha suficient espai a la taula pel tour.sel.\n");
             printf ("\nIntrodueix un argument -ts mes petit\n");
             return -1;
