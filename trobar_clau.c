@@ -29,7 +29,7 @@ int main (int argc, char* argv[]){
     int cromosomes = DEF_CROM;
     int tour_sel = DEF_TOUR_SEL;
     float prob_m = DEF_PROB_M;
-    //Variables per la generacio dels gens
+    //Variables per generacio de nombres alestoris
     float aleatori01;
     //Altres variables
     int args_tractats;
@@ -53,6 +53,11 @@ int main (int argc, char* argv[]){
                else if (strcmp(argv[args_tractats],"-c") == 0){ //Nombre de cromosomes 
 
                    cromosomes = atoi(argv[args_tractats + 1]);
+                   if (cromosomes % 2 != 0){
+                       printf ("\nERROR: El nombre de cromosomes ha de ser parell\n");
+                       return -1;
+                   }
+
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
@@ -95,6 +100,13 @@ int main (int argc, char* argv[]){
 
     for (int i = 0; i < tour_sel; i++){
         croms_ts[i] = (int *) malloc(N_GENS * sizeof(int));
+        
+        if(corms_ts[i] == NULL){
+            printf ("\nERROR: No hi ha suficient espai a la taula pel tour.sel.\n");
+            printf ("\nIntrodueix un argument -ts mes petit\n");
+            return -1;
+        }
+
     }
 
     for(int i = 0; i < cromosomes; i++){
@@ -107,14 +119,15 @@ int main (int argc, char* argv[]){
         }
     }
     
+    //Generar gens aleatoris pel tournament selection
     for(int i = 0; i < tour_sel; i++){
         for(int j = 0; j < N_GENS; j++){
             taula_croms[i][j] = round((float)rand() / RAND_MAX);            
         }
     }
 
-    imprimir_matriu(taula_croms, tour_sel, N_GENS);
-   
     free(taula_croms);
+    free(croms_ts);
+
     return 0;
 }
