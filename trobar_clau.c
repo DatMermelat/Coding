@@ -12,6 +12,7 @@
 #define N_GENS 30
 
 void imprimir_matriu (int ** matriu, int num_fil, int num_col){
+    printf("\n");
     for (int i = 0; i < num_fil; i++){
         for (int j = 0; j < num_col; j++){
             printf ("%d ", matriu[i][j]);
@@ -23,6 +24,14 @@ void imprimir_matriu (int ** matriu, int num_fil, int num_col){
 
 }
 
+void imprimir_vector(int * vector, int n){
+    printf ("\n");
+    for (int i = 0; i < n; i++){
+        printf("%d ", vector[i]);
+    }
+    printf("\n");
+}
+
 int main (int argc, char* argv[]){ 
     //Variables pels command-line args  
     int generacions = DEF_GENER;
@@ -31,11 +40,12 @@ int main (int argc, char* argv[]){
     float prob_m = DEF_PROB_M;
     //Variables per generacio de nombres aleatoris
     float aleatori01;
-    //Altres variables
-    int args_tractats;
     //Taules 
     int ** taula_croms;
     int ** croms_ts;
+    int * taula_errors;
+    //Altres variables
+    int args_tractats;
 
     srand(time(NULL));  
 
@@ -91,10 +101,12 @@ int main (int argc, char* argv[]){
 
     taula_croms = (int **) malloc(cromosomes * sizeof(int *));
     croms_ts = (int **) malloc(tour_sel * sizeof(int *));
+    taula_errors = (int *) malloc(cromosomes * sizeof(int)); 
 
-    if (taula_croms == NULL || croms_ts == NULL){
+
+    if (taula_croms == NULL || croms_ts == NULL || taula_errors == NULL){
         printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
-        printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
+        printf ("\nIntrodueix un nombre de cromosomes i/o tour. sel. mes petit\n");
         return -1;
     }
 
@@ -122,12 +134,17 @@ int main (int argc, char* argv[]){
     //Generar gens aleatoris pel tournament selection
     for(int i = 0; i < tour_sel; i++){
         for(int j = 0; j < N_GENS; j++){
-            taula_croms[i][j] = round((float)rand() / RAND_MAX);            
+            croms_ts[i][j] = round((float)rand() / RAND_MAX);            
         }
     }
 
+    imprimir_matriu(croms_ts, tour_sel, N_GENS);
+
+    funcio_error(croms_ts, tour_sel, N_GENS, taula_errors);
+
     free(taula_croms);
     free(croms_ts);
+    free(taula_errors);
 
     return 0;
 }
