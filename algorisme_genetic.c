@@ -4,7 +4,7 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
     int suma;
     int producte;
 
-    pirntf ("\n");
+    printf ("\n");
 
     for(int a  = 0; a  < num_fil; a++){
         for(int b  = 0; b < num_col; b++){
