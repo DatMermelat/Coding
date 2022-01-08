@@ -7,8 +7,8 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
     pirntf ("\n");
 
     for(int a  = 0; a  < num_fil; a++){
-        for(int b  = 0; b  < num_col; b++){
-            printf("%d ", matriu_gens[a]][b]);
+        for(int b  = 0; b < num_col; b++){
+            printf("%d ", matriu_gens[a][b]);
             if (b < num_col - 1){
                 printf("\n");
             }
