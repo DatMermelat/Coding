@@ -9,8 +9,8 @@ int main (){
 
     srand(time(NULL));
 
-    //aleatori = rand();
-    aleatori01 = rand() / RAND_MAX;
+    aleatori = rand();
+    aleatori01 = (float) aleatori / RAND_MAX;
 
     printf ("\n %f \n", round(aleatori01));
 }
