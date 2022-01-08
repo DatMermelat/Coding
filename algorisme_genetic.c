@@ -10,7 +10,7 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
             producte = matriu_gens[i][j] * j * j;
             printf("\n%d ", producte);
             suma += producte;
-            printf("\n%d ");
+            printf("\n%d ", suma);
             
             if(j == num_col){
                 error = 1977 - suma;
