@@ -9,7 +9,7 @@
 #define DEF_CROM 40 //Nombre de cromosomes per defecte
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
-#define N_GENS 30
+#define N_GENS 5
 
 void imprimir_matriu (int ** matriu, int num_fil, int num_col){
     printf("\n");
