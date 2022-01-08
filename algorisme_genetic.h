@@ -1,1 +1,1 @@
- int suma (int a, int b);
+ int funcio_error (int ** matriu_gens , int num_fil, int num_col, int * errors);
