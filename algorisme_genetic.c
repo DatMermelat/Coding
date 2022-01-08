@@ -6,7 +6,7 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
     for(int i = 0; i < num_fil; i++){
         suma = 0;
         for(int j = 1; j <= num_col; j++){
-            producte = matriu_gens[i][j] * pow(j,2);
+            producte = matriu_gens[i][j] * j * j;
             suma += producte;
             
             if(j == num_col){

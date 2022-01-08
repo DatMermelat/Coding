@@ -142,6 +142,8 @@ int main (int argc, char* argv[]){
 
     funcio_error(croms_ts, tour_sel, N_GENS, taula_errors);
 
+    imprimir_vector(taula_errors, tour_sel);
+
     free(taula_croms);
     free(croms_ts);
     free(taula_errors);
