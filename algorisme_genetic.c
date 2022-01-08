@@ -1,3 +1,4 @@
+#include <stdio.h>
 void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
     int error;
     int suma;
