@@ -4,6 +4,17 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
     int suma;
     int producte;
 
+    pirntf ("\n");
+
+    for(int i = 0; i < num_fil; i++){
+        for (int j = 0; j < num_col; j++){}
+            printf("%d ", matriu_gens[i][j]);
+            if (j < num_col - 1){
+                printf("\n");
+            }
+        }
+    }
+
     for(int i = 0; i < num_fil; i++){
         suma = 0;
         for(int j = 1; j <= num_col; j++){
