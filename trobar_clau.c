@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <string.h>
 #include "algorisme_genetic.h" 
 
 #define DEF_GENER 100 //Nombre de generacions per defecte
@@ -93,7 +94,7 @@ int main (int argc, char* argv[]){
          
     }
 
-    printf("\nDades introduïdes:\n");
+    printf("\nDades introduides:\n");
 
     printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, cromosomes, prob_m, tour_sel);
 
@@ -132,14 +133,21 @@ int main (int argc, char* argv[]){
     }
     
     //Generar gens aleatoris pel tournament selection
+    
     for(int i = 0; i < tour_sel; i++){
         for(int j = 0; j < N_GENS; j++){
             croms_ts[i][j] = round((float)rand() / RAND_MAX);            
         }
     }
 
-    funcio_error(croms_ts, tour_sel, N_GENS, taula_errors);
+    imprimir_matriu(croms_ts, tour_sel, N_GENS);
 
+    funcio_error(taula_errors, croms_ts, tour_sel, N_GENS); //La funcio guarda l'error de cada cromosoma en un vector
+
+    seleccio(taula_errors, croms_ts, taula_croms, cromosomes, N_GENS);
+    
+    imprimir_matriu(taula_croms, cromosomes, N_GENS);
+    
     free(taula_croms);
     free(croms_ts);
     free(taula_errors);
