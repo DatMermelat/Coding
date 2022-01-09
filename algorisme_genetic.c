@@ -1,5 +1,7 @@
 #include <stdio.h>
-void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
+
+void funcio_error (int * errors, int ** matriu_gens, int num_fil, int num_col){
+
     int error;
     int suma;
     int producte;
@@ -18,5 +20,21 @@ void funcio_error (int ** matriu_gens, int num_fil,int num_col, int * errors){
                 errors[i] = error;
             }
         }
+    }
+}
+
+void seleccio (int * errors, int ** matriu_in, int ** matriu_out, int n_croms, int n_gens){
+    int posicio_min = 0;
+    int error_min = errors[posicio_min];
+
+    for (int i = 1; i < n_croms; i++){
+        if (errors[i] < error_min){
+            error_min = errors[i];
+            posicio_min = i;
+        }
+    }
+
+    for (int j = 0; j < n_gens; j++){
+        matriu_in[posicio_min][j] = matriu_out[0][j];
     }
 }
