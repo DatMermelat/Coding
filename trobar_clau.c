@@ -138,11 +138,7 @@ int main (int argc, char* argv[]){
         }
     }
 
-    imprimir_matriu(croms_ts, tour_sel, N_GENS);
-
     funcio_error(croms_ts, tour_sel, N_GENS, taula_errors);
-
-    imprimir_vector(taula_errors, tour_sel);
 
     free(taula_croms);
     free(croms_ts);
