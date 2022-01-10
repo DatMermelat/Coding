@@ -1,3 +1,5 @@
- void funcio_error (int errors[], int valor_funcio, int ** matriu_gens , int n_croms, int n_gens);
+void fill_rand(int** matriu, int n_fil, int n_col);
+ 
+int funcio_error (int gens[], int n_gens, int valor_funcio);
 
- void seleccio (int errors[], int ** matriu_in, int ** matriu_out, int n_croms, int n_gens);
+//void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens);
