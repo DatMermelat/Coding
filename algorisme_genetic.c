@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void funcio_error (int * errors, int valor_fucio, int ** matriu_gens, int num_croms, int num_gens){
+void funcio_error (int errors[], int valor_fucio, int ** matriu_gens, int num_croms, int num_gens){
 
     int error;
     int suma;
@@ -26,7 +26,7 @@ void funcio_error (int * errors, int valor_fucio, int ** matriu_gens, int num_cr
     }
 }
 
-void seleccio (int * errors, int ** matriu_in, int ** matriu_out, int n_croms, int n_gens){
+void seleccio (int errors[], int ** matriu_in, int ** matriu_out, int n_croms, int n_gens){
     int posicio_min = 0;
     int error_min = errors[0];
 
