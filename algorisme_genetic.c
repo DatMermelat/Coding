@@ -35,6 +35,6 @@ void seleccio (int * errors, int ** matriu_in, int ** matriu_out, int n_croms, i
     }
 
     for (int j = 0; j < n_gens; j++){
-        matriu_in[posicio_min][j] = matriu_out[0][j];
+        matriu_out[0][j] = matriu_in[posicio_min][j]; 
     }
 }
