@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void funcio_error (int errors[], int valor_fucnio, int ** matriu_gens, int n_croms, int n_gens){
+void funcio_error (int errors[], int valor_funcio, int ** matriu_gens, int n_croms, int n_gens){
 
     int error;
     int suma;
