@@ -1,21 +1,24 @@
 #include <stdio.h>
 
-void funcio_error (int * errors, int ** matriu_gens, int num_fil, int num_col){
+void funcio_error (int * errors, int valor_fucio, int ** matriu_gens, int num_croms, int num_gens){
 
     int error;
     int suma;
     int producte;
 
-    for(int i = 0; i < num_fil; i++){
+    for(int i = 0; i < num_croms; i++){
         suma = 0;
-        for(int j = 0; j < num_col; j++){
+        for(int j = 0; j < num_gens; j++){
             producte = (matriu_gens[i][j]) * (j+1) * (j+1);
             suma += producte;
             
             if(j == num_col - 1){
-                error = 1977 - suma;
+                error = valor_funcio - suma;
                 if(error < 0){
                     error = -error; 
+                }
+                else if (error == 0){
+                    
                 }
                 errors[i] = error;
             }

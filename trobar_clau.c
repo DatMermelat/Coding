@@ -11,6 +11,7 @@
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 30
+#define VALOR_FUNCIO 1977 //El valor que volem trobar
 
 void imprimir_matriu (int ** matriu, int num_fil, int num_col){
     printf("\n");
@@ -48,7 +49,7 @@ int main (int argc, char* argv[]){
     //Altres variables
     int args_tractats;
 
-    srand(time(NULL));  
+    srand(666);  
 
     //Llegir els command-line args 
     if (argc > 1){
@@ -142,7 +143,7 @@ int main (int argc, char* argv[]){
 
     imprimir_matriu(croms_ts, tour_sel, N_GENS);
 
-    funcio_error(taula_errors, croms_ts, tour_sel, N_GENS); //La funcio guarda l'error de cada cromosoma en un vector
+    funcio_error(taula_errors, VALOR_FUNCIO, croms_ts, tour_sel, N_GENS); //La funcio guarda l'error de cada cromosoma en un vector
 
     seleccio(taula_errors, croms_ts, taula_croms, cromosomes, N_GENS);
     
