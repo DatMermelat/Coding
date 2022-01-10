@@ -13,7 +13,7 @@
 #define N_GENS 30
 #define VALOR_FUNCIO 1977 //El valor que volem trobar
 
-void imprimir_matriu (int ** matriu, int num_fil, int num_col){
+void print_matriu (int ** matriu, int num_fil, int num_col){
     printf("\n");
     for (int i = 0; i < num_fil; i++){
         for (int j = 0; j < num_col; j++){
@@ -26,7 +26,7 @@ void imprimir_matriu (int ** matriu, int num_fil, int num_col){
 
 }
 
-void imprimir_vector(int * vector, int n){
+void print_vector(int * vector, int n){
     printf ("\n");
     for (int i = 0; i < n; i++){
         printf("%d ", vector[i]);
@@ -40,14 +40,12 @@ int main (int argc, char* argv[]){
     int cromosomes = DEF_CROM;
     int tour_sel = DEF_TOUR_SEL;
     float prob_m = DEF_PROB_M;
-    //Variables per generacio de nombres aleatoris
-    float aleatori01;
     //Taules 
-    int ** taula_croms;
-    int ** croms_ts;
-    int * taula_errors;
+    int ** m_pool;
+    int ** poblacio;
     //Altres variables
     int args_tractats;
+    int error;
 
     srand(666);  
 
@@ -101,55 +99,37 @@ int main (int argc, char* argv[]){
 
     //Crearcio de taules dinamiques i comprovacions
 
-    taula_croms = (int **) malloc(cromosomes * sizeof(int *));
-    croms_ts = (int **) malloc(tour_sel * sizeof(int *));
-    taula_errors = (int *) malloc(cromosomes * sizeof(int)); 
+    m_pool = (int **) malloc(cromosomes * sizeof(int *));
+    poblacio = (int **) malloc(cromosomes * sizeof(int *)); 
 
-
-    if (taula_croms == NULL || croms_ts == NULL || taula_errors == NULL){
+    if (m_pool == NULL || poblacio == NULL){
         printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
-        printf ("\nIntrodueix un nombre de cromosomes i/o tour. sel. mes petit\n");
+        printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
         return -1;
     }
 
-    for (int i = 0; i < tour_sel; i++){
-        croms_ts[i] = (int *) malloc(N_GENS * sizeof(int));
-        
-        if(croms_ts[i] == NULL){
-            printf ("\nERROR: No hi ha suficient espai a la taula pel tour.sel.\n");
-            printf ("\nIntrodueix un argument -ts mes petit\n");
-            return -1;
-        }
-
-    }
-
     for(int i = 0; i < cromosomes; i++){
-        taula_croms[i] = (int *) malloc(N_GENS * sizeof(int));
         
-        if (taula_croms[i] == NULL){
+        m_pool[i] = (int *) malloc(N_GENS * sizeof(int));
+        poblacio[i] = (int *) malloc(N_GENS * sizeof(int));
+        
+        if (m_pool[i] == NULL || poblacio[i]){
             printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
             printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
             return -1;
         }
     }
+
+    //Començament de l'algorisme genetic
     
-    //Generar gens aleatoris pel tournament selection
-    
-    for(int i = 0; i < tour_sel; i++){
-        for(int j = 0; j < N_GENS; j++){
-            croms_ts[i][j] = round((float)rand() / RAND_MAX);            
-        }
+    //Alliberar taules
+    for(int i = 0; i < cromosomes; i++){
+        free(m_pool[i]);
+        free(poblacio[i]);
     }
 
-    imprimir_matriu(croms_ts, tour_sel, N_GENS);
-
-    funcio_error(taula_errors, VALOR_FUNCIO, croms_ts, tour_sel, N_GENS); //La funcio guarda l'error de cada cromosoma en un vector
-
-    seleccio(taula_errors, croms_ts, taula_croms, cromosomes, N_GENS);
-    
-    free(taula_croms);
-    free(croms_ts);
-    free(taula_errors);
+    free(m_pool);
+    free(poblacio);
 
     return 0;
 }
