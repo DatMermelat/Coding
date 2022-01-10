@@ -146,8 +146,6 @@ int main (int argc, char* argv[]){
 
     seleccio(taula_errors, croms_ts, taula_croms, cromosomes, N_GENS);
     
-    imprimir_matriu(taula_croms, cromosomes, N_GENS);
-    
     free(taula_croms);
     free(croms_ts);
     free(taula_errors);
