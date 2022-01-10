@@ -1,43 +1,46 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
-void funcio_error (int errors[], int valor_funcio, int ** matriu_gens, int n_croms, int n_gens){
+void fill_rand(int** matriu, int n_fil, int n_col){
+    
+    float aleatori01;
+
+    for(int i = 0; i < n_fil; i++){
+        for(int j = 0; j < n_col; j++){
+            aleatori01 = round((float)rand() / RAND_MAX);
+
+            matriu[i][j] = aleatori01;            
+        }
+    }
+}
+
+int funcio_error (int gens[], int n_gens, int valor_funcio){
 
     int error;
-    int suma;
+    int suma = 0;
     int producte;
 
-    for(int i = 0; i < n_croms; i++){
-        suma = 0;
-        for(int j = 0; j < n_gens; j++){
-            producte = (matriu_gens[i][j]) * (j+1) * (j+1);
-            suma += producte;
-            
-            if(j == n_gens - 1){
-                error = valor_funcio - suma;
-                if(error < 0){
-                    error = -error; 
-                }
-                else if (error == 0){
-                    
-                }
-                errors[i] = error;
-            }
-        }
+    for (int i = 0; i < n_gens; i++){
+        producte = gens[i] * (i+1) * (i+1);
+        suma += producte;
     }
+
+    error = suma - valor_funcio;
+    
+    if(error < 0){ //Convertir en positiu si escau
+        error = -error;
+    }
+    return error;
 }
 
-void seleccio (int errors[], int ** matriu_in, int ** matriu_out, int n_croms, int n_gens){
-    int posicio_min = 0;
-    int error_min = errors[0];
+/*
+void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens){
 
-    for (int i = 1; i < n_croms; i++){
-        if (errors[i] < error_min){
-            error_min = errors[i];
-            posicio_min = i;
+    for(int i = 0; i < cromosomes; i++){
+        for(int j = 0; j < k; j++){
+
         }
     }
-
-    for (int j = 0; j < n_gens; j++){
-        matriu_out[0][j] = matriu_in[posicio_min][j]; 
-    }
-}
+} */
