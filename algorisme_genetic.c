@@ -36,19 +36,31 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){
 }
 
 
-void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens, int valor_funcio){
+void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, int valor_funcio, int best[]){
 
      int aleatori;
      int error;
      int error_min;
 
     for(int i = 0; i < cromosomes; i++){
-        for(int j = 0; j < k; j++){
+
+        error_min = INT_MAX;
+
+        for(int j = 0; j < k; j++){ //Seleccionar k cromosomes de forma aleatoria per comparar els seus errors
 
             aleatori = rand() % cromosomes; //Generar un aleatori entre 0 i el nombre de cromosomes -1
             
             error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
-            if(error < error_min);
+            
+            if(error < error_min){ //Comprovar l'error de cada cromosoma de la matriu de població
+                
+                error_min = error;
+
+                for(int a  = 0; a < n_gens; a++){ //Passar el millor cromosoma al mating pool
+                    m_pool[i][a] = poblacio[i][a];
+                    best[a] = poblacio[i][a];
+                }            
+            }
         }
     }
 }

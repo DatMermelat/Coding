@@ -43,6 +43,7 @@ int main (int argc, char* argv[]){
     //Taules 
     int ** m_pool;
     int ** poblacio;
+    int best[GENS];
     //Altres variables
     int args_tractats;
     int error;
@@ -121,6 +122,13 @@ int main (int argc, char* argv[]){
     }
 
     //Començament de l'algorisme genetic
+    fill_rand(poblacio, cromosomes, N_GENS);
+    print_matriu(poblacio, cromosomes, N_GENS);
+
+    seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best[]);
+
+    print_matriu(m_pool, cromosomes, N_GENS);
+    print_vector(best, N_GENS);
     
     //Alliberar taules
     for(int i = 0; i < cromosomes; i++){
