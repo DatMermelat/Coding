@@ -3,14 +3,14 @@
 #include <time.h>
 #include <math.h>
 
+#define MAX 40
 int main (){
     int aleatori;
-    float aleatori01;
+    
 
     srand(time(NULL));
 
-    aleatori = rand();
-    aleatori01 = (float) aleatori / RAND_MAX;
+    aleatori = rand() % MAX;
 
-    printf ("\n %f \n", round(aleatori01));
+    printf ("\n %f \n", aleatori);
 }

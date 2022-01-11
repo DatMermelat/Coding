@@ -35,12 +35,13 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){
     return error;
 }
 
-/*
+
 void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens){
+
+     
 
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < k; j++){
-
         }
     }
-} */
+}
