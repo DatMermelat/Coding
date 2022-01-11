@@ -11,7 +11,7 @@ int main (){
 
     printf("\n");
     for(int i = 0; i < 6; i++){
-        for(int j = 0; < COL; j++){
+        for(int j = 0;j  < COL; j++){
             printf("%d ", test[i][j]);
             if (j == COL - 1){
                 printf("\n");
