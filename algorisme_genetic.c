@@ -72,9 +72,9 @@ void crossover(int** m_pool, int cromosomes, int n_gens){
      
      for(int i = 0; i < cromosomes - 1; i += 2){
 
-         crosspoint = rand % n_gens;
+         crosspoint = rand() % n_gens;
 
-         for(int j = 0; j < n_gens, j++){
+         for(int j = 0; j < n_gens; j++){
             aux = m_pool[i+1][crosspoint+j];
             m_pool[i + 1][crosspoint + j] = m_pool[i][j];
             m_pool[i][j] = aux;
