@@ -44,6 +44,7 @@ int main (int argc, char* argv[]){
     int ** m_pool;
     int ** poblacio;
     int best[N_GENS];
+    int test[6][N_GENS];
     //Altres variables
     int args_tractats;
 
