@@ -40,6 +40,7 @@ void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens,
 
      int aleatori;
      int error;
+     int error_min;
 
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < k; j++){
@@ -47,6 +48,7 @@ void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens,
             aleatori = rand() % cromosomes; //Generar un aleatori entre 0 i el nombre de cromosomes -1
             
             error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
+            if(error < error_min);
         }
     }
 }
