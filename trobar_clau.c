@@ -7,7 +7,7 @@
 #include "algorisme_genetic.h" 
 
 #define DEF_GENER 100 //Nombre de generacions per defecte
-#define DEF_CROM 10 //Nombre de cromosomes per defecte
+#define DEF_CROM 40 //Nombre de cromosomes per defecte
 #define DEF_PROB_M 0.05 //Probabilitat de mutació per defecte 
 #define DEF_TOUR_SEL 5 //Nombre de cromosomes al tournament selection per defecte
 #define N_GENS 5
@@ -47,7 +47,7 @@ int main (int argc, char* argv[]){
     //Altres variables
     int args_tractats;
 
-    srand(time(NULL));  
+    srand(666);  
 
     //Llegir els command-line args 
     if (argc > 1){
@@ -125,8 +125,11 @@ int main (int argc, char* argv[]){
     print_matriu(poblacio, cromosomes, N_GENS);
 
     seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
-
     print_matriu(m_pool, cromosomes, N_GENS);
+
+    crossover(m_pool, cromosomes, N_GENS);
+    print_matriu(m_pool, cromosomes, N_GENS);
+
     print_vector(best, N_GENS); 
     
     //Alliberar taules

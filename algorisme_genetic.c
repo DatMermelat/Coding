@@ -43,7 +43,7 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
      int error;
      int error_min;
 
-    for(int i = 0; i < cromosomes; i++){ //Omplir el mating pool
+     for(int i = 0; i < cromosomes; i++){ //Omplir el mating pool
 
         error_min = INT_MAX;
 
@@ -64,4 +64,20 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
             }
         }
     }
+}
+
+void crossover(int** m_pool, int cromosomes, int n_gens){
+     int crosspoint;
+     int aux;
+     
+     for(int i = 0; i < cromosomes - 1; i += 2){
+
+         crosspoint = rand % n_gens;
+
+         for(int j = 0; j < n_gens, j++){
+            aux = m_pool[i+1][crosspoint+j];
+            m_pool[i + 1][crosspoint + j] = m_pool[i][j];
+            m_pool[i][j] = aux;
+         }
+     }
 }
