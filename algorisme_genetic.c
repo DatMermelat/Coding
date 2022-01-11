@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#include <limit.h>
+#include <limits.h>
 
 void fill_rand(int** matriu, int n_fil, int n_col){
     
