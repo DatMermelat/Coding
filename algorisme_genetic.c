@@ -59,7 +59,6 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
 
                 for(int a  = 0; a < n_gens; a++){ //Passar el millor cromosoma al mating pool
                     m_pool[i][a] = poblacio[aleatori][a];
-                    best[a] = poblacio[aleatori][a];
                 }            
             }
         }
@@ -75,9 +74,9 @@ void crossover(int** m_pool, int cromosomes, int n_gens){
          crosspoint = rand() % n_gens;
 
          for(int j = 0; j < crosspoint; j++){
-            aux = m_pool[i+1][crosspoint+j];
-            m_pool[i + 1][crosspoint + j] = m_pool[i][j];
-            m_pool[i][j] = aux;
+            aux = m_pool[i][j];
+            m_pool[i][j] = m_pool[i+1][j];
+            m_pool[i+1][j] = aux;
          }
      }
 }
