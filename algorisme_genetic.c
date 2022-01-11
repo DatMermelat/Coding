@@ -36,12 +36,17 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){
 }
 
 
-void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens){
+void seleccio (int** m_pool, int ** poblacio, int cromosomes, int k, int n_gens, int valor_funcio){
 
-     
+     int aleatori;
+     int error;
 
     for(int i = 0; i < cromosomes; i++){
         for(int j = 0; j < k; j++){
+
+            aleatori = rand() % cromosomes; //Generar un aleatori entre 0 i el nombre de cromosomes -1
+            
+            error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
         }
     }
 }
