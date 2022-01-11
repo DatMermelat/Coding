@@ -121,16 +121,21 @@ int main (int argc, char* argv[]){
     }
 
     //Començament de l'algorisme genetic
-    fill_rand(poblacio, cromosomes, N_GENS);
-    print_matriu(poblacio, cromosomes, N_GENS);
+    //fill_rand(poblacio, cromosomes, N_GENS);
+    //print_matriu(poblacio, cromosomes, N_GENS);
 
-    seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
-    print_matriu(m_pool, cromosomes, N_GENS);
+    //seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
+    //print_matriu(m_pool, cromosomes, N_GENS);
+    for(int i = 1; i <= cromosomes; i++){
+        for(int j = 1; j <= N_GENS; j++){
+            m_pool[i][j] = j;
+        }
+    }
 
     crossover(m_pool, cromosomes, N_GENS);
     print_matriu(m_pool, cromosomes, N_GENS);
 
-    print_vector(best, N_GENS); 
+    //print_vector(best, N_GENS); 
     
     //Alliberar taules
     for(int i = 0; i < cromosomes; i++){
