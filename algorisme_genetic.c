@@ -57,8 +57,8 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
                 error_min = error;
 
                 for(int a  = 0; a < n_gens; a++){ //Passar el millor cromosoma al mating pool
-                    m_pool[i][a] = poblacio[i][a];
-                    best[a] = poblacio[i][a];
+                    m_pool[i][a] = poblacio[aleatori][a];
+                    best[a] = poblacio[aleatori][a];
                 }            
             }
         }
