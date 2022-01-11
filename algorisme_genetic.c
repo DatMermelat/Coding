@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <limit.h>
 
 void fill_rand(int** matriu, int n_fil, int n_col){
     
@@ -22,12 +23,12 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){
     int suma = 0;
     int producte;
 
-    for (int i = 0; i < n_gens; i++){
+    for (int i = 0; i < n_gens; i++){ //Calcular la funcio
         producte = gens[i] * (i+1) * (i+1);
         suma += producte;
     }
 
-    error = suma - valor_funcio;
+    error = suma - valor_funcio; //Calcular l'error
     
     if(error < 0){ //Convertir en positiu si escau
         error = -error;
@@ -42,7 +43,7 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
      int error;
      int error_min;
 
-    for(int i = 0; i < cromosomes; i++){
+    for(int i = 0; i < cromosomes; i++){ //Omplir el mating pool
 
         error_min = INT_MAX;
 
