@@ -70,7 +70,7 @@ void crossover(int** m_pool, int cromosomes, int n_gens){
      int crosspoint;
      int aux;
      
-     for(int i = 0; i < cromosomes - 1; i += 2){
+     for(int i = 0; i < cromosomes - 1; i = i + 2){
 
          crosspoint = rand() % n_gens;
 
