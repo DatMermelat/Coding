@@ -113,7 +113,7 @@ int main (int argc, char* argv[]){
         m_pool[i] = (int *) malloc(N_GENS * sizeof(int));
         poblacio[i] = (int *) malloc(N_GENS * sizeof(int));
         
-        if (m_pool[i] == NULL || poblacio[i]){
+        if (m_pool[i] == NULL || poblacio[i] == NULL){
             printf ("\nERROR: No hi ha suficient espai a la taula de cromosomes\n");
             printf ("\nIntrodueix un nombre de cromosomes mes petit\n");
             return -1;
