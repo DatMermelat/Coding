@@ -37,7 +37,7 @@ int main (int argc, char* argv[]){
     int args_tractats;
     int gen_counter = 1;
 
-    srand(123);  
+    srand(time(NULL));  
 
     //Llegir els command-line args 
     if (argc > 1){
