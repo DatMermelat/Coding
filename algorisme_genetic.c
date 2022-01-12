@@ -107,3 +107,11 @@ void flipmut(int** m_pool, int cromosomes, int n_gens, float prob_m){ //Accio qu
         }
     }
 }
+
+void relleu (int** m_pool, int** poblacio, int cromosomes, int n_gens){ //Funcio que passa els cromosomes del mating pool a la poblacio
+    for(int i = 0; i < cromosomes; i++){
+        for(int j = 0; j < n_gens; j++){
+            poblacio[i][j] = m_pool[i][j];
+        }
+    }
+}

@@ -144,6 +144,9 @@ int main (int argc, char* argv[]){
     flipmut(m_pool, cromosomes, N_GENS, prob_m);
     print_matriu(m_pool, cromosomes, N_GENS);
 
+    relleu(m_pool, poblacio, cromosomes, N_GENS);
+    print_matriu(poblacio, cromosomes, N_GENS);
+
     print_vector(best, N_GENS); 
     
     //Alliberar taules

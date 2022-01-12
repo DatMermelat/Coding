@@ -7,3 +7,5 @@ void seleccio(int** m_pool, int ** poblacio, int cromosomes, int n_gens, int k, 
 void crossover(int** m_pool, int cromosomes, int n_gens);
 
 void flipmut(int** m_pool, int cromosomes, int n_gens, float prob_m);
+
+void relleu(int** m_pool, int** poblacio, int cromosomes, int n_gens);
