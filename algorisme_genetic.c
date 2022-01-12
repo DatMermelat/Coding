@@ -97,7 +97,7 @@ void flipmut(int** m_pool, int cromosomes, int n_gens, float prob_m){ //Accio qu
             aleatori01 = (float)rand() / RAND_MAX; //Generar un aleatori entre 0 i 1 qualsevol
 
             if(aleatori01 <= prob_m){  //Comrpovar si el gen ha de mutar o no
-                if(m_pool[i][j] == 0){}
+                if(m_pool[i][j] == 0){
                     m_pool[i][j] = 1;
                 }
                 else{
