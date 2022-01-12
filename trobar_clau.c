@@ -22,7 +22,7 @@ void print_vector(int * vector, int n){
 }
 
 int main (int argc, char* argv[]){ 
-    //Variables pels command-line args  
+    //Variables fonamentals (modificables pels command-line args)  
     int generacions = DEF_GENER;
     int cromosomes = DEF_CROM;
     int tour_sel = DEF_TOUR_SEL;
@@ -39,68 +39,75 @@ int main (int argc, char* argv[]){
 
     srand(time(NULL));  
 
-    //Llegir els command-line args 
+    //Llegir els command-line args i comprovar que els inputs son compatibles
     if (argc > 1){
         args_tractats = 1;
 
         while ((argc - args_tractats) > 0){
                
-               if (strcmp(argv[args_tractats],"-g") == 0){ //Nombre de generacions 
+            if (strcmp(argv[args_tractats],"-g") == 0){ //Nombre de generacions 
                   
-                   generacions = atoi(argv[args_tractats + 1]);
-                   args_tractats += 2; 
-               } 
-               else if (strcmp(argv[args_tractats],"-c") == 0){ //Nombre de cromosomes 
+                generacions = atoi(argv[args_tractats + 1]);
 
-                   cromosomes = atoi(argv[args_tractats + 1]);
-                   if (cromosomes % 2 != 0){
-                       printf ("\nERROR: El nombre de cromosomes ha de ser parell\n");
-                       return -1;
-                   }
-                   else if (cromosomes < tour_sel){
-                       printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superior al total de cromosomes\n");
-                       return -1;
-                   }
+                if(generacions < 0){
+                    printf("\nERROR: El nombre de generacions no pot ser negatiu\n");
+                    return -1;
+                }
+                args_tractats += 2; 
+            } 
+            else if (strcmp(argv[args_tractats],"-c") == 0){ //Nombre de cromosomes 
 
-                   args_tractats += 2;
-               }
-               else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
+                cromosomes = atoi(argv[args_tractats + 1]);
+                   
+                if (cromosomes % 2 != 0){
+                    printf("\nERROR: El nombre de cromosomes ha de ser parell\n");
+                    return -1;
+                }
+                else if (cromosomes < tour_sel){
+                    printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superior al total de cromosomes\n");
+                    return -1;
+                }
+                args_tractats += 2;
+            }
+            else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
 
-                   prob_m = atof(argv[args_tractats + 1]);
-                   if (prob_m > 1 || prob_m < 0){
-                       printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
-                       return -1;
-                   }
-                   args_tractats += 2;
-               }
-               else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
+                prob_m = atof(argv[args_tractats + 1]);
+                   
+                if (prob_m > 1 || prob_m < 0){
+                    printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
+                    return -1;
+                }
+                args_tractats += 2;
+            }
+            else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
 
-                   tour_sel = atoi(argv[args_tractats + 1]);
-                   if (tour_sel > cromosomes){
-                       printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superiror al total de cromosomes\n");
-                       return -1;
-                   }
-                   args_tractats += 2;
-               }
-               else{
+                tour_sel = atoi(argv[args_tractats + 1]);
+                   
+                if (tour_sel > cromosomes){
+                    printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superiror al total de cromosomes\n");
+                    return -1;
+                }
+                args_tractats += 2;
+            }
+            else{
 
-                   printf("\nERROR: Argument desconegut\n");
-                   printf("\nLes comandes reconegudes son:\n");
-                   printf("-g  generacions \n-c  cromosomes \n-prob  probabilitat de mutacio \n-ts  cromosomes pel tournament selection \n");
+                printf("\nERROR: Argument desconegut\n");
+                printf("\nLes comandes reconegudes son:\n");
+                printf("-g  generacions \n-c  cromosomes \n-prob  probabilitat de mutacio \n-ts  cromosomes pel tournament selection \n");
 
-                   return -1;
-               }
+                return -1;
+            }
  
         }
          
     }
-
+    
+    //Recordatori de les dades introduides
     printf("\nDades introduides:\n");
 
     printf("\ngeneracions %d   cromosomes %d   probabilitat de mutacio %.4f   cromosomes pel tour.sel. %d \n", generacions, cromosomes, prob_m, tour_sel);
 
     //Crearcio de taules dinamiques i comprovacions
-
     m_pool = (int **) malloc(cromosomes * sizeof(int *));
     poblacio = (int **) malloc(cromosomes * sizeof(int *)); 
 
@@ -144,7 +151,7 @@ int main (int argc, char* argv[]){
         
         flipmut(m_pool, cromosomes, N_GENS, prob_m); //Mutar certs gens del mating pool
 
-        relleu (m_pool, poblacio, cromosomes, N_GENS); //El mating pool passa a ser la nova poblacio
+        relleu(m_pool, poblacio, cromosomes, N_GENS); //El mating pool passa a ser la nova poblacio
 
         gen_counter++; //Incrementar el comptador de generacions
     }
