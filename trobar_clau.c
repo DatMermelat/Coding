@@ -122,10 +122,10 @@ int main (int argc, char* argv[]){
 
     //Començament de l'algorisme genetic
     
-    fill_rand(poblacio, cromosomes, n_gens);
+    fill_rand(poblacio, cromosomes, N_GENS);
 
     //Inicialitzar el vector que guarda el millor resultat
-    for(int i = 0; i < n_gens; i++){
+    for(int i = 0; i < N_GENS; i++){
         best[i] = poblacio [0][i];
     }
 
