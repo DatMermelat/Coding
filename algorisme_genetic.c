@@ -41,7 +41,9 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
 
      int aleatori;
      int error;
-     int error_min;
+     int error_min_k;  
+
+     error_min_total = INT_MAX;
 
      for(int i = 0; i < cromosomes; i++){ //Omplir el mating pool
 
@@ -53,9 +55,9 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
             
             error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
             
-            if(error <= error_min){ //Comprovar l'error de cada cromosoma de la matriu de població
+            if(error <= error_min_k){ //Comprovar l'error de cada cromosoma de la matriu de població
                 
-                error_min = error;
+                error_min_k = error;
 
                 for(int a  = 0; a < n_gens; a++){ //Passar el millor cromosoma al mating pool
                     m_pool[i][a] = poblacio[aleatori][a];
