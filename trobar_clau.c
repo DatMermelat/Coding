@@ -126,9 +126,9 @@ int main (int argc, char* argv[]){
 
     //seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
     //print_matriu(m_pool, cromosomes, N_GENS);
-    for(int i = 1; i <= cromosomes; i++){
-        for(int j = 1; j <= N_GENS; j++){
-            m_pool[i][j] = j;
+    for(int i = 0; i < cromosomes; i++){
+        for(int j = 0; j < N_GENS; j++){
+            m_pool[i][j] = j + 1;
         }
     }
     print_matriu(m_pool, cromosomes, N_GENS);
