@@ -13,19 +13,6 @@
 #define N_GENS 30
 #define VALOR_FUNCIO 1977 //El valor que volem trobar
 
-void print_matriu (int ** matriu, int num_fil, int num_col){
-    printf("\n");
-    for (int i = 0; i < num_fil; i++){
-        for (int j = 0; j < num_col; j++){
-            printf ("%d ", matriu[i][j]);
-            if (j == num_col - 1){
-                printf ("\n");
-            }
-        }
-    }
-
-}
-
 void print_vector(int * vector, int n){
     printf ("\n");
     for (int i = 0; i < n; i++){
@@ -48,7 +35,7 @@ int main (int argc, char* argv[]){
     bool trobat = false;
     //Altres variables
     int args_tractats;
-    int gen_counter = 0;
+    int gen_counter = 1;
 
     srand(123);  
 
@@ -145,6 +132,33 @@ int main (int argc, char* argv[]){
         best[i] = poblacio [0][i];
     }
 
+    while(gen_counter <= generacions && !trobat){
+
+        seleccio(m_pool, poblacio, cromosomes, N_GENS, trour_sel, VALOR_FUNCIO, best); //Seleccionar cromosomes pel mating poo
+
+        if(funcio_error(best, N_GENS, VALOR_FUNCIO) == 0){ //Comprovar si s'ha trobat la solucio
+            trobat = true;
+        }
+
+        crossover(m_pool, cromosomes, N_GENS); //Fer crossover al mating pool
+        
+        flipmut(m_pool, cromosomes, N_GENS, prob_m); //Mutar certs gens del mating pool
+
+        relleu (m_pool, poblacio, cromosomes, N_GENS); //El mating pool passa a ser la nova poblacio
+
+        gen_counter++; //Incrementar el comptador de generacions
+    }
+
+    //Missatges
+    if(trobat){
+        printf("\nS'ha trobat la contrasenya! Han fet falta %d generacions\n", gen_counter);
+        printf("\nLa contrasenya es:\n");
+    }
+    else{
+        printf("\nNo s'ha pogut trobar la contrasenya, el millor resultat es:\n");
+    }
+    
+    print_vector(best, N_GENS); //Imprimir el millor resultat
 
     //Alliberar taules
     for(int i = 0; i < cromosomes; i++){

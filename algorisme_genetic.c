@@ -53,7 +53,7 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
             
             error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
             
-            if(error <= error_min){ //Comprovar l'error de cada cromosoma de la matriu de població
+            if(error < error_min){ //Comprovar l'error de cada cromosoma de la matriu de població
                 
                 error_min = error;
 
