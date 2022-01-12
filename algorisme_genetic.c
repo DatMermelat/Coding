@@ -60,6 +60,13 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
                 for(int a  = 0; a < n_gens; a++){ //Passar el millor cromosoma al mating pool
                     m_pool[i][a] = poblacio[aleatori][a];
                 }            
+
+                if(error_min < funcio_error(best, n_gens, valor_funcio)){ //Comprovar si el millor cromosoma del grup k es el millor en general
+                    
+                    for(int b = 0; b < n_gens; b++){ //En cas que sigui el millor, passar-ho a un vector que guarda el millor resultat
+                        best[b] = m_pool[i][b];
+                    }
+                }
             }
         }
     }
@@ -71,7 +78,7 @@ void crossover(int** m_pool, int cromosomes, int n_gens){
      
      for(int i = 0; i < cromosomes - 1; i = i + 2){
 
-         crosspoint = rand() % n_gens;
+         crosspoint = rand() % (n_gens - 1) + 1; //Generar un aleatori entre 1 i n_gens - 1 per assegurar que el cross-point mai serà ni la posició 0 ni la posicio final
 
          for(int j = 0; j < crosspoint; j++){
             aux = m_pool[i][j];

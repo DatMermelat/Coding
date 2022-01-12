@@ -127,11 +127,10 @@ int main (int argc, char* argv[]){
     seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
     print_matriu(m_pool, cromosomes, N_GENS);
     
-    print_matriu(m_pool, cromosomes, N_GENS);
     crossover(m_pool, cromosomes, N_GENS);
     print_matriu(m_pool, cromosomes, N_GENS);
 
-    //print_vector(best, N_GENS); 
+    print_vector(best, N_GENS); 
     
     //Alliberar taules
     for(int i = 0; i < cromosomes; i++){
