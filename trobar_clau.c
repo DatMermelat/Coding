@@ -131,7 +131,7 @@ int main (int argc, char* argv[]){
             m_pool[i][j] = j;
         }
     }
-
+    print_matriu(m_pool, cromosomes, N_GENS);
     crossover(m_pool, cromosomes, N_GENS);
     print_matriu(m_pool, cromosomes, N_GENS);
 
