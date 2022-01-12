@@ -44,8 +44,11 @@ int main (int argc, char* argv[]){
     int ** m_pool;
     int ** poblacio;
     int best[N_GENS];
+    //Booleans
+    bool trobat = false;
     //Altres variables
     int args_tractats;
+    int gen_counter = 0;
 
     srand(123);  
 
@@ -75,12 +78,17 @@ int main (int argc, char* argv[]){
                    prob_m = atof(argv[args_tractats + 1]);
                    if (prob_m > 1 || prob_m < 0){
                        printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
+                       return -1;
                    }
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
 
                    tour_sel = atoi(argv[args_tractats + 1]);
+                   if (tour_sel > cromosomes){
+                       printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superiror al total de cromosomes\n");
+                       return -1;
+                   }
                    args_tractats += 2;
                }
                else{
@@ -125,6 +133,7 @@ int main (int argc, char* argv[]){
 
     //Començament de l'algorisme genetic
     
+    //Omplir la taula de poblacio amb nombres aleatoris (0 o 1)
     fill_rand(poblacio, cromosomes, N_GENS);
 
     //Inicialitzar el vector que guarda el millor resultat
@@ -132,23 +141,7 @@ int main (int argc, char* argv[]){
         best[i] = poblacio [0][i];
     }
 
-    print_matriu(poblacio, cromosomes, N_GENS);
-    print_vector(best, N_GENS);
 
-    seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
-    print_matriu(m_pool, cromosomes, N_GENS);
-    
-    crossover(m_pool, cromosomes, N_GENS);
-    print_matriu(m_pool, cromosomes, N_GENS);
-
-    flipmut(m_pool, cromosomes, N_GENS, prob_m);
-    print_matriu(m_pool, cromosomes, N_GENS);
-
-    relleu(m_pool, poblacio, cromosomes, N_GENS);
-    print_matriu(poblacio, cromosomes, N_GENS);
-
-    print_vector(best, N_GENS); 
-    
     //Alliberar taules
     for(int i = 0; i < cromosomes; i++){
         free(m_pool[i]);
