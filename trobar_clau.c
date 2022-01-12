@@ -73,6 +73,9 @@ int main (int argc, char* argv[]){
                else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
 
                    prob_m = atof(argv[args_tractats + 1]);
+                   if (prob_m > 1 || prob_m < 0){
+                       printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
+                   }
                    args_tractats += 2;
                }
                else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
@@ -136,6 +139,9 @@ int main (int argc, char* argv[]){
     print_matriu(m_pool, cromosomes, N_GENS);
     
     crossover(m_pool, cromosomes, N_GENS);
+    print_matriu(m_pool, cromosomes, N_GENS);
+
+    flipmut(m_pool, cromosomes, N_GENS, prob_m);
     print_matriu(m_pool, cromosomes, N_GENS);
 
     print_vector(best, N_GENS); 

@@ -4,20 +4,20 @@
 #include <math.h>
 #include <limits.h>
 
-void fill_rand(int** matriu, int n_fil, int n_col){
+void fill_rand(int** matriu, int n_fil, int n_col){ //Funcio per omplir una taula de aleatoris entre 0 o 1
     
-    float aleatori01;
+    int  aleatori01;
 
     for(int i = 0; i < n_fil; i++){
         for(int j = 0; j < n_col; j++){
-            aleatori01 = round((float)rand() / RAND_MAX);
+            aleatori01 = rand() % 2; //Generar un aleatori que sigui 0 o 1
 
             matriu[i][j] = aleatori01;            
         }
     }
 }
 
-int funcio_error (int gens[], int n_gens, int valor_funcio){
+int funcio_error (int gens[], int n_gens, int valor_funcio){ //Funcio que retorna l'error d'un cromosoma respecte a un valor previament introduit
 
     int error;
     int suma = 0;
@@ -37,7 +37,7 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){
 }
 
 
-void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, int valor_funcio, int best[]){
+void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, int valor_funcio, int best[]){ //Accio que passa els millors cromosomes de la poblacio al mating poo
 
      int aleatori;
      int error;
@@ -72,18 +72,38 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
     }
 }
 
-void crossover(int** m_pool, int cromosomes, int n_gens){
+void crossover(int** m_pool, int cromosomes, int n_gens){ //Accio que encreua els cromosomes del mating poo
      int crosspoint;
      int aux;
      
-     for(int i = 0; i < cromosomes - 1; i = i + 2){
+     for(int i = 0; i < cromosomes - 1; i += 2){
 
          crosspoint = rand() % (n_gens - 1) + 1; //Generar un aleatori entre 1 i n_gens - 1 per assegurar que el cross-point mai serà ni la posició 0 ni la posicio final
 
-         for(int j = 0; j < crosspoint; j++){
+         for(int j = 0; j < crosspoint; j++){ //Intercanviar els gens de cada parella de cromosomes
             aux = m_pool[i][j];
             m_pool[i][j] = m_pool[i+1][j];
             m_pool[i+1][j] = aux;
          }
      }
+}
+
+void flipmut(int** m_pool, int cromosomes, int n_gens, float prob_m){ //Accio que muta de forma aleatoria els gens dels cromosomes
+    float aleatori01;
+
+    for(int i = 0; i < cromosomes; i++){
+        for(int j = 0; j < n_gens; j++){
+
+            aleatori01 = (float)rand() / RAND_MAX; //Generar un aleatori entre 0 i 1 qualsevol
+
+            if(aleatori01 <= prob_m){  //Comrpovar si el gen ha de mutar o no
+                if(m_pool[i][j] == 0){}
+                    m_pool[i][j] = 1;
+                }
+                else{
+                    m_pool[i][j] = 0;
+                }
+            }
+        }
+    }
 }
