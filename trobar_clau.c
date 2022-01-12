@@ -121,8 +121,16 @@ int main (int argc, char* argv[]){
     }
 
     //Començament de l'algorisme genetic
-    fill_rand(poblacio, cromosomes, N_GENS);
+    
+    fill_rand(poblacio, cromosomes, n_gens);
+
+    //Inicialitzar el vector que guarda el millor resultat
+    for(int i = 0; i < n_gens; i++){
+        best[i] = poblacio [0][i];
+    }
+
     print_matriu(poblacio, cromosomes, N_GENS);
+    print_vector(best, N_GENS);
 
     seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best);
     print_matriu(m_pool, cromosomes, N_GENS);
