@@ -47,7 +47,7 @@ int main (int argc, char* argv[]){
     //Altres variables
     int args_tractats;
 
-    srand(666);  
+    srand(123);  
 
     //Llegir els command-line args 
     if (argc > 1){
