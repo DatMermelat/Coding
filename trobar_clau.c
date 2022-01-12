@@ -134,7 +134,7 @@ int main (int argc, char* argv[]){
 
     while(gen_counter <= generacions && !trobat){
 
-        seleccio(m_pool, poblacio, cromosomes, N_GENS, trour_sel, VALOR_FUNCIO, best); //Seleccionar cromosomes pel mating poo
+        seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best); //Seleccionar cromosomes pel mating poo
 
         if(funcio_error(best, N_GENS, VALOR_FUNCIO) == 0){ //Comprovar si s'ha trobat la solucio
             trobat = true;
