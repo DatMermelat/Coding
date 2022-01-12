@@ -4,7 +4,7 @@
 #include <math.h>
 #include <limits.h>
 
-void fill_rand(int** matriu, int n_fil, int n_col){ //Funcio per omplir una taula de aleatoris entre 0 o 1
+void fill_rand (int** matriu, int n_fil, int n_col){ //Funcio per omplir una taula de aleatoris entre 0 o 1
     
     int  aleatori01;
 
@@ -72,7 +72,7 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
     }
 }
 
-void crossover(int** m_pool, int cromosomes, int n_gens){ //Accio que encreua els cromosomes del mating poo
+void crossover (int** m_pool, int cromosomes, int n_gens){ //Accio que encreua els cromosomes del mating poo
      int crosspoint;
      int aux;
      
@@ -88,7 +88,7 @@ void crossover(int** m_pool, int cromosomes, int n_gens){ //Accio que encreua el
      }
 }
 
-void flipmut(int** m_pool, int cromosomes, int n_gens, float prob_m){ //Accio que muta de forma aleatoria els gens dels cromosomes
+void flipmut (int** m_pool, int cromosomes, int n_gens, float prob_m){ //Accio que muta de forma aleatoria els gens dels cromosomes
     float aleatori01;
 
     for(int i = 0; i < cromosomes; i++){
