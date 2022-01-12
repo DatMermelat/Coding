@@ -43,8 +43,6 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
      int error;
      int error_min;  
 
-     error_min_total = INT_MAX;
-
      for(int i = 0; i < cromosomes; i++){ //Omplir el mating pool
 
         error_min = INT_MAX;
