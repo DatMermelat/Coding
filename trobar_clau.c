@@ -70,6 +70,10 @@ int main (int argc, char* argv[]){
                        printf ("\nERROR: El nombre de cromosomes ha de ser parell\n");
                        return -1;
                    }
+                   else if (cromosomes < tour_sel){
+                       printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superior al total de cromosomes\n");
+                       return -1;
+                   }
 
                    args_tractats += 2;
                }
