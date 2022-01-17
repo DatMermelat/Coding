@@ -31,7 +31,7 @@ int main (int argc, char* argv[]){
     int ** m_pool;
     int ** poblacio;
     int best[N_GENS];
-    //Booleans
+    //Booleans per soritr del bucle de generacions
     bool trobat = false;
     //Altres variables
     int args_tractats;
@@ -49,44 +49,24 @@ int main (int argc, char* argv[]){
                   
                 generacions = atoi(argv[args_tractats + 1]);
 
-                if(generacions < 0){
-                    printf("\nERROR: El nombre de generacions no pot ser negatiu\n");
-                    return -1;
-                }
                 args_tractats += 2; 
             } 
             else if (strcmp(argv[args_tractats],"-c") == 0){ //Nombre de cromosomes 
 
                 cromosomes = atoi(argv[args_tractats + 1]);
                    
-                if (cromosomes % 2 != 0){
-                    printf("\nERROR: El nombre de cromosomes ha de ser parell\n");
-                    return -1;
-                }
-                else if (cromosomes < tour_sel){
-                    printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superior al total de cromosomes\n");
-                    return -1;
-                }
                 args_tractats += 2;
             }
             else if (strcmp(argv[args_tractats],"-prob") == 0){ //Probabilitat de mutacio
 
                 prob_m = atof(argv[args_tractats + 1]);
                    
-                if (prob_m > 1 || prob_m < 0){
-                    printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
-                    return -1;
-                }
                 args_tractats += 2;
             }
             else if (strcmp(argv[args_tractats],"-ts") == 0){ //Cromosomes pel tour. sel.
 
                 tour_sel = atoi(argv[args_tractats + 1]);
                    
-                if (tour_sel > cromosomes){
-                    printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superiror al total de cromosomes\n");
-                    return -1;
-                }
                 args_tractats += 2;
             }
             else{
@@ -99,7 +79,19 @@ int main (int argc, char* argv[]){
             }
  
         }
-         
+
+        if (cromosomes % 2 != 0){
+            printf("\nERROR: El nombre de cromosomes ha de ser parell\n");
+            return -1;
+        }
+        if (tour_sel > cromosomes){
+            printf("\nERROR: El nombre de cromosomes pel tournament selection no pot ser superiror al total de cromosomes\n");
+            return -1;
+        } 
+        if (prob_m > 1 || prob_m < 0){
+            printf("\nERROR: La probabilitat de mutacio no pot ser major a 1 o inferior a 0\n");
+            return -1;
+        }
     }
     
     //Recordatori de les dades introduides
@@ -131,7 +123,7 @@ int main (int argc, char* argv[]){
 
     //Començament de l'algorisme genetic
     
-    //Omplir la taula de poblacio amb nombres aleatoris (0 o 1)
+    //Inicialitzar la taula de poblacio amb nombres aleatoris (0 o 1)
     fill_rand(poblacio, cromosomes, N_GENS);
 
     //Inicialitzar el vector que guarda el millor resultat
@@ -141,7 +133,7 @@ int main (int argc, char* argv[]){
 
     while(gen_counter <= generacions && !trobat){
 
-        seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best); //Seleccionar cromosomes pel mating poo
+        seleccio(m_pool, poblacio, cromosomes, N_GENS, tour_sel, VALOR_FUNCIO, best); //Seleccionar cromosomes pel mating pool
 
         if(funcio_error(best, N_GENS, VALOR_FUNCIO) == 0){ //Comprovar si s'ha trobat la solucio
             trobat = true;
@@ -162,7 +154,7 @@ int main (int argc, char* argv[]){
         printf("\nLa contrasenya es:\n");
     }
     else{
-        printf("\nNo s'ha pogut trobar la contrasenya, el millor resultat es:\n");
+        printf("\nNo s'ha pogut trobar la contrasenya, el millor resultat (amb un error de %d) es:\n", funcio_error(best, N_GENS, VALOR_FUNCIO));
     }
     
     print_vector(best, N_GENS); //Imprimir el millor resultat
