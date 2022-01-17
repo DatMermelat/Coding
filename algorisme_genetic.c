@@ -37,7 +37,7 @@ int funcio_error (int gens[], int n_gens, int valor_funcio){ //Funcio que retorn
 }
 
 
-void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, int valor_funcio, int best[]){ //Accio que passa els millors cromosomes de la poblacio al mating poo
+void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, int valor_funcio, int best[]){ //Accio que passa els millors cromosomes de la poblacio al mating pool
 
      int aleatori;
      int error;
@@ -51,9 +51,9 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
 
             aleatori = rand() % cromosomes; //Generar un aleatori entre 0 i el nombre de cromosomes -1
             
-            error = funcio_error(poblacio[aleatori], n_gens, valor_funcio);
+            error = funcio_error(poblacio[aleatori], n_gens, valor_funcio); //Passar  un cromosoma aleatori a la funcio de calcul de error
             
-            if(error < error_min){ //Comprovar l'error de cada cromosoma de la matriu de població
+            if(error < error_min){ //Comprovar l'error de cada un dels k cromosomes de la matriu de població
                 
                 error_min = error;
 
@@ -72,11 +72,11 @@ void seleccio (int** m_pool, int** poblacio, int cromosomes, int n_gens, int k, 
     }
 }
 
-void crossover (int** m_pool, int cromosomes, int n_gens){ //Accio que encreua els cromosomes del mating poo
+void crossover (int** m_pool, int cromosomes, int n_gens){ //Accio que encreua els cromosomes del mating pool
      int crosspoint;
      int aux;
      
-     for(int i = 0; i < cromosomes - 1; i += 2){
+     for(int i = 0; i < cromosomes; i += 2){
 
          crosspoint = rand() % (n_gens - 1) + 1; //Generar un aleatori entre 1 i n_gens - 1 per assegurar que el cross-point mai serà ni la posició 0 ni la posicio final
 
