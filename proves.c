@@ -9,9 +9,5 @@
 #define MAX 40
 
 int main(){
-    printf("\n Esto es una prueba para ver como de comodo es programar con una tablet que y un teclado marca blanca comprado por aliexpress\n");
-
-    for(int i = 0; i < MAX; i++){
-        printf("%d ", i);
-    }
+    printf("\nxd\n");
 }
