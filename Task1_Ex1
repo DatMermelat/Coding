@@ -1,0 +1,38 @@
+%Problem 1
+n=40;
+epsilon=double((1/2)*10^(-9));
+I=zeros(1,n);
+dif=0;
+Int = double (0);
+
+I(2)=double((pi^2-4)/pi^3); %I_2
+
+fprintf('First 19 terms in ascending order (starting from I(4)):\n\n');
+%Compute the first 19 terms of the recurrence (ascending)
+clear
+for k = 2:2:38
+    I(k+2) = (1/pi)*(1-(((k+1)*(k+2))/pi)*I(k));
+    f = @ (x) x.^(k+2).*sin(pi.*x);
+    Int=integral(f,0,1);
+    dif = abs(I(k+2) - Int);
+    
+    fprintf('I(%d) = %.16f \n',k+2,I(k+2));
+    fprintf('Intergral = %.16f \n', Int);
+    fprintf('Difference = %.16f \n\n', dif);
+end 
+
+
+I(40)=epsilon; %Error Hypothesis
+
+fprintf('First 19 terms in descending order (assuming I(40)=1/2e-9):\n\n');
+%Compute the recurrece from I(40) -> I(2) (descending)
+for k = 40:-2:4
+    I(k-2) = -((pi^2)/(k*(k-1)))*(I(k)-1/pi);
+    f = @ (x) x.^(k-2).*sin(pi.*x);
+    Int=integral(f,0,1);
+    dif = abs(I(k-2) - Int);
+    
+    fprintf('I(%d) = %.16f \n',k-2,I(k-2));
+    fprintf('Intergral = %.16f \n', Int);
+    fprintf('Difference = %.16f \n\n', dif);
+end

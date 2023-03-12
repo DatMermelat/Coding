@@ -1,0 +1,23 @@
+% Problem 2
+clear
+
+n=50;
+Rec=zeros(1,n);
+dif=0;
+f=double(0);
+
+Rec(1)=1;
+Rec(2)=double((1-sqrt(5))/2);
+
+fprintf('Initial conditions:\n');
+fprintf('Rec(1): %f\n',Rec(1));
+fprintf('Rec(2): %f\n\n',Rec(2));
+for k = 3:n+1
+    Rec(k)=Rec(k-2)+Rec(k-1);
+    f=((1-sqrt(5))/2)^(k-1);
+    dif=abs(Rec(k)-f);
+    
+    fprintf('Formula_%d: %.16f\n',k,f);
+    fprintf('Recurrence_%d: %.16f\n',k,Rec(k));
+    fprintf('Difference: %.16f\n\n',dif);
+end
