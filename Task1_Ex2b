@@ -1,23 +1,52 @@
 % Problem 2
+
 clear
 
-n=50;
-Rec=zeros(1,n);
-dif=0;
-f=double(0);
+% Defining the matrices and vectors
+n=80;
+A=zeros(n);
+x=zeros(n,1);
+b=zeros(n,1);
 
-Rec(1)=1;
-Rec(2)=double((1-sqrt(5))/2);
+b(1:n,1)=pi;
 
-fprintf('Initial conditions:\n');
-fprintf('Rec(1): %f\n',Rec(1));
-fprintf('Rec(2): %f\n\n',Rec(2));
-for k = 3:n+1
-    Rec(k)=Rec(k-2)+Rec(k-1);
-    f=((1-sqrt(5))/2)^(k-1);
-    dif=abs(Rec(k)-f);
-    
-    fprintf('Formula_%d: %.16f\n',k,f);
-    fprintf('Recurrence_%d: %.16f\n',k,Rec(k));
-    fprintf('Difference: %.16f\n\n',dif);
+for i=1:n
+    for j=1:n
+        if i == j
+            A(i,j) = 2*i;
+        end
+        if abs(i-j) == 2
+            A(i,j) = 0.5*i;
+        end
+        if abs(i-j) == 4
+            A(i,j) = 0.25*i;
+        end
+    end
+end
+
+% Solving the system via Gauss-Seidel
+MaxIter = 100000; % Maximum number of iterations allowed
+Tol = 10e-8; % Error tolerance
+
+tic
+[x,iter] = GaussSeidel_inf(x,A,b,MaxIter,Tol);
+toc
+
+% Printing solution
+fprintf('Gauss-Seidel solution:\n\n')
+for i=1:n
+    fprintf('x%d = %f\n',i,x(i,1))
+end
+
+fprintf('\n\n')
+
+% Solving the system via MatLab solver
+tic
+x = A\b;
+toc
+
+% Printing solution
+fprintf('MatLab solver solution:\n\n')
+for i=1:n
+    fprintf('x%d = %f\n',i,x(i,1))
 end
