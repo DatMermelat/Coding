@@ -1,5 +1,5 @@
 % Problem 1
-% Newton-Raphson Method for polynomial
+% Newton-Raphson Method for u
 clear
 
 format long
@@ -14,9 +14,12 @@ f = @(x) x^5-(9/2)*x^4+(23/4)*x^3+(9/8)*x^2-(27/4)*x+27/8;
 df = @(x) 5*x^4-18*x^3+(69/4)*x^2+(18/8)*x-27/4;
 d2f = @(x) 20*x^3-54*x^2+(69/2)*x+18/8;
 
+u = @(x) f(x)./df(x);
+du = @(x) 1 - (f(x).*d2f(x)./df(x).^2);
+
 % Solving the non-linear equation with the basic Newton-Raphson method in [0,2]
 x0=2;
-[root,dif,n,rec] = Mod_Newton(f, df, x0, TolX, TolY, MaxIter);
+[root,dif,n,rec] = Mod_Newton(u, du, x0, TolX, TolY, MaxIter);
 
 fprintf ('Results for x0=%f: \n',x0)
 

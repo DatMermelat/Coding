@@ -1,52 +1,41 @@
 % Problem 2
-
+% Newton-Raphson Method for P=25
 clear
 
-% Defining the matrices and vectors
-n=80;
-A=zeros(n);
-x=zeros(n,1);
-b=zeros(n,1);
+format long
 
-b(1:n,1)=pi;
+% Basic Parameters
+TolX = 10^(-6); % Tolerance in x-axis
+TolY = 10^(-6); % Tolerance in y-axis   
+MaxIter = 1000; % Max number of iterations
 
-for i=1:n
-    for j=1:n
-        if i == j
-            A(i,j) = 2*i;
-        end
-        if abs(i-j) == 2
-            A(i,j) = 0.5*i;
-        end
-        if abs(i-j) == 4
-            A(i,j) = 0.25*i;
-        end
-    end
-end
+% Desired value of P
+P = 25;
 
-% Solving the system via Gauss-Seidel
-MaxIter = 100000; % Maximum number of iterations allowed
-Tol = 10e-8; % Error tolerance
+% Function parameters
+R = 0.082; % Liter-atm/Kg
+T = 293; % Kelvin
 
-tic
-[x,iter] = GaussSeidel_inf(x,A,b,MaxIter,Tol);
-toc
+a2 = -1.06;
+a3 = 0.057;
+a4 = -0.0001; 
 
-% Printing solution
-fprintf('Gauss-Seidel solution:\n\n')
-for i=1:n
-    fprintf('x%d = %f\n',i,x(i,1))
-end
+% Functions
+f = @(x) R.*T./x + a2./x.^2 + a3./x.^3 + a4./x.^4 - P;
+df = @(x) -R*T/x^2 - 2*a2/x^3 - 3*a3/x^4 - 4*a4/x^5;
 
-fprintf('\n\n')
+%Plotting the function
+fplot(f,[-1,5]);
 
-% Solving the system via MatLab solver
-tic
-x = A\b;
-toc
+grid on
 
-% Printing solution
-fprintf('MatLab solver solution:\n\n')
-for i=1:n
-    fprintf('x%d = %f\n',i,x(i,1))
-end
+% Solving the non-linear equation with the basic Newton-Raphson method in [0,2]
+x0=0.25; % Initial condition
+[root,dif,n,rec] = Mod_Newton(f, df, x0, TolX, TolY, MaxIter);
+
+fprintf ('Results for P=%f atm and x0=%f: \n\n',P,x0)
+
+fval = f(rec(n));
+
+fprintf ( ' k = %d, x = %10.8f,  f(x) = % 10.8f \n', n, rec(n), fval)
+fprintf (' Volume (V) : %10.8f, dif =  %10.8f \n\n', root, dif)
