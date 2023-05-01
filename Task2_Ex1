@@ -1,32 +1,29 @@
 % Problem 1
-% Newton-Raphson Method for u
 clear
 
-format long
+% Number of points
+n=1000;
+x=linspace(2009,2025,n);
+yp8=zeros(1,n);
 
-% Basic Parameters
-TolX = 10^(-6); % Tolerance in x-axis
-TolY = 10^(-6); % Tolerance in y-axis   
-MaxIter = 1000; % Max number of iterations
+% Interpolation arrays with 2015 data
+X8=[2009,2011,2013,2015,2017,2019,2021,2023];
+Y8=[12.0,12.7,13.0,15.2,18.2,19.8,24.1,28.1];
 
-% Functions
-f = @(x) x^5-(9/2)*x^4+(23/4)*x^3+(9/8)*x^2-(27/4)*x+27/8;
-df = @(x) 5*x^4-18*x^3+(69/4)*x^2+(18/8)*x-27/4;
-d2f = @(x) 20*x^3-54*x^2+(69/2)*x+18/8;
+% Interpolation
+for i=1:n
+    yp8(i) = Point_Lagrange(X8,Y8,x(i));
+end
 
-u = @(x) f(x)./df(x);
-du = @(x) 1 - (f(x).*d2f(x)./df(x).^2);
+% Interpolation arrays without 2015 data
+% X7=[2009,2011,2013,2017,2019,2021,2023];
+% Y7=[12.0,12.7,13.0,18.2,19.8,24.1,28.1];
 
-% Solving the non-linear equation with the basic Newton-Raphson method in [0,2]
-x0=2;
-[root,dif,n,rec] = Mod_Newton(u, du, x0, TolX, TolY, MaxIter);
+% [c7,~]=Pol_Lagrange(X7,Y7);
 
-fprintf ('Results for x0=%f: \n',x0)
+% Plotting 
+plot(x,yp8);
+xlabel('Year')
+ylabel('Toxin Concentration')
 
-fval = f(rec(n));
-dfval = df(rec(n));
-d2fval = d2f(rec(n));
-
-fprintf ( ' iterations = %d, x = %10.8f,  f(x) = % 10.8f,  df(x) = % 10.8f,  d2f(x) = % 10.8f \n', n, rec(n), fval, dfval, d2fval)
-
-fprintf (' root : %10.8f, dif =  %10.8f \n\n', root, dif)
+disp(yp8(1000))
