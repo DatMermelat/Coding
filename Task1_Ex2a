@@ -1,29 +1,58 @@
-% Problem 1
-% Newton-Raphson Method for polynomial
+% Problem 2
 clear
+
+% Function handle to be integrated
+
+g = @(x) exp(-10.*x);
+
+% r(x). Auxiliary random distribution
+
+f = @(x) 6.05/2.*(x-1).^2;
+
+% Plot the function to be integrated and the majorating function
+xp = 0:0.01:1;
+yc = exp(-10.*xp);
+yp = f(xp);
+
+plot(xp,yp,'b',xp,yc,'r')
+xlabel('x')
+ylabel('f(x)')
+hold on
 
 format long
 
-% Basic Parameters
-TolX = 10^(-6); % Tolerance in x-axis
-TolY = 10^(-6); % Tolerance in y-axis   
-MaxIter = 1000; % Max number of iterations
+% Random uniform sample.
+N = 1000;
+xu = rand(1,N);
+yu = exp(-10*xu);
+I1 = 1/N * sum(yu);
 
-% Functions
-f = @(x) x^5-(9/2)*x^4+(23/4)*x^3+(9/8)*x^2-(27/4)*x+27/8;
-df = @(x) 5*x^4-18*x^3+(69/4)*x^2+(18/8)*x-27/4;
-d2f = @(x) 20*x^3-54*x^2+(69/2)*x+18/8;
+% Importance sampling
+xr = zeros(1,N);
+yr = zeros(1,N);
 
-% Solving the non-linear equation with the basic Newton-Raphson method in [0,2]
-x0=2;
-[root,dif,n,rec] = Mod_Newton(f, df, x0, TolX, TolY, MaxIter);
+i = 0;
+while (i < N)
+    xa = rand;
+    ya = (6.05/2)*rand;
+    if (ya < 6.05/2*(xa-1)^2) 
+        % Use this point for the importance sampling
+        i = i + 1;
+        xr(i) = xa;
+        % g(x) * f_U(x) / f*(x)
+        % Our domain is [0,1], so f_U(x) = 1.
+        yr(i) = (2*exp(-10*xr(i)))/(6.05*(xr(i)-1)^2);
+        plot(xa,ya,'ro')
+        hold on
+    end
+end 
 
-fprintf ('Results for x0=%f: \n',x0)
+% Estimated values of the integral
 
-fval = f(rec(n));
-dfval = df(rec(n));
-d2fval = d2f(rec(n));
 
-fprintf ( ' iterations = %d, x = %10.8f,  f(x) = % 10.8f,  df(x) = % 10.8f,  d2f(x) = % 10.8f \n', n, rec(n), fval, dfval, d2fval)
+I2 = 1/N * sum(yr);  
+exact = integral(g,0,1);
 
-fprintf (' root : %10.8f, dif =  %10.8f \n\n', root, dif)
+fprintf (' Crude Monte Carlo    = %8.6f\n', I1)
+fprintf (' Importance Sampling  = %8.6f\n', I2)
+fprintf (' Exact Value          = %8.6f\n', exact)
