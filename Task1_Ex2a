@@ -1,58 +1,82 @@
-% Problem 2
 clear
+% Load the image
 
-% Function handle to be integrated
+ I = imread('landscape.png');
 
-g = @(x) exp(-10.*x);
+% Define the scaling factor (number of times interpolation is performed)
+scale_factor = 1;
 
-% r(x). Auxiliary random distribution
+% Interpolation Degree
+n = 1;
 
-f = @(x) 6.05/2.*(x-1).^2;
+% Defining arrays for the Lagrange Pol. inputs
+Xin=zeros(1,n+1);
+Yin=zeros(1,n+1);
 
-% Plot the function to be integrated and the majorating function
-xp = 0:0.01:1;
-yc = exp(-10.*xp);
-yp = f(xp);
+% Get the size of the original image
+[rows,cols,~] = size(I);
 
-plot(xp,yp,'b',xp,yc,'r')
-xlabel('x')
-ylabel('f(x)')
-hold on
-
-format long
-
-% Random uniform sample.
-N = 1000;
-xu = rand(1,N);
-yu = exp(-10*xu);
-I1 = 1/N * sum(yu);
-
-% Importance sampling
-xr = zeros(1,N);
-yr = zeros(1,N);
-
-i = 0;
-while (i < N)
-    xa = rand;
-    ya = (6.05/2)*rand;
-    if (ya < 6.05/2*(xa-1)^2) 
-        % Use this point for the importance sampling
-        i = i + 1;
-        xr(i) = xa;
-        % g(x) * f_U(x) / f*(x)
-        % Our domain is [0,1], so f_U(x) = 1.
-        yr(i) = (2*exp(-10*xr(i)))/(6.05*(xr(i)-1)^2);
-        plot(xa,ya,'ro')
-        hold on
+new_rows=rows;
+new_cols=cols;
+% f = double(I(:,:,1));
+f = im2gray(I);
+for iterations=1:scale_factor
+    if iterations > 1
+        clear f;
+        cols = new_cols;
+        rows = new_rows;
+        f    = new_image;
+        clear new_image;
     end
-end 
+    %New image size
+    new_rows=2*new_rows-1;
+    new_cols=2*new_cols-1;
+    new_image = zeros(new_rows,new_cols);
 
-% Estimated values of the integral
+    for i=1:rows-n
+        for j=1:cols-n
+           % Getting the nodes 
+           for k=0:n
+               Xin(k+1)=j+k;
+           end
+           for k=0:n
+               Yin(k+1)=i+k;
+           end
+           
+           % Getting Lagrange coefficient polynomials
+           Lx=Gen_Lagrange_Pol_x(Xin);
+           Ly=Gen_Lagrange_Pol_y(Yin);
+           
+           
+           p = @(x,y) 0;
+           for k=0:n
+               for l=0:n
+                   p = @ (x,y) p(x,y) + Ly{k+1}(y).*Lx{l+1}(x).*f(i+k,j+l);
+               end
+           end
+           
+           for u=i:0.5:i+0.5
+               for v=j:0.5:j+0.5
+                   new_image(2*u-1,2*v-1)= p(v,u);
+                   if v==cols-n
+                       for k=n:-1:1
+                           new_image(2*u-1,2*cols-k)= p(cols-k+1,u);
+                       end
+                   end
+                   if u == rows-n
+                       for k=n:-1:1
+                           new_image(2*rows-k,2*v-1)=p(v,rows-k+1);
+                       end
+                   end
+               end
+           end
+        end
+    end
+end
 
+new_image = uint8(new_image);
 
-I2 = 1/N * sum(yr);  
-exact = integral(g,0,1);
-
-fprintf (' Crude Monte Carlo    = %8.6f\n', I1)
-fprintf (' Importance Sampling  = %8.6f\n', I2)
-fprintf (' Exact Value          = %8.6f\n', exact)
+% Show the original and interpolated images side by side
+figure
+subplot(1,2,1); imshow(I); title('Original Image');
+subplot(1,2,2); imshow(new_image); title('Interpolated Image');
