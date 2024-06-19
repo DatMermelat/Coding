@@ -6,10 +6,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        PajekComunitats test = new PajekComunitats(15, "star.net");
+        PajekComunitats test = new PajekComunitats(15, "zachary_unwh.net");
 
         test.optimitzarModularitat(100, 1000);
 
-        test.crearFitxer("star.clu");
+        System.out.println(test.numComunitats());
+
+        test.crearFitxer("zachary_unwh.clu");
     }
 }
