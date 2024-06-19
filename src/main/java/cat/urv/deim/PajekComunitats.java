@@ -125,7 +125,7 @@ public class PajekComunitats {
         double suma = 0;
 
         // Bucle per calcular la modularitat
-        for (Integer id : comunitatIDs) {
+        for (Integer id : comunitatIDs) { // Iterem sobre totes les comunitats
             try{
                 // Fem cast a double a les varibales que ho requereixen
                 double connexionsComunitat = (double) connexionsComunitat(id);
@@ -148,13 +148,13 @@ public class PajekComunitats {
 
         try {
             // Accedim a la comunitat
-            IHashMap<Integer, Integer> comunitat = comunitats.consultarComunitat(c);
+            ILlistaGenerica<Integer> comunitat = comunitats.consultarComunitat(c);
 
             // Bucle per comptar les connexions intracomunitaries
             for (Integer vertexID : comunitat){
                 for (Integer vei : xarxa.obtenirVeins(vertexID)){
                     // Comprovem si el vei pertany a la mateixa comunitat
-                    if(comunitat.buscar(vei)){ // El vei es de la comunitat. Incrementem comptador
+                    if(comunitat.existeix(vei)){ // El vei es de la comunitat. Incrementem comptador
                         connexions++;
                     }
                 }
@@ -224,8 +224,8 @@ public class PajekComunitats {
     // Metode per optimitzar la modularitat de la xarxa
     public void optimitzarModularitat(int tolerancia, int maxIteracions) {
         // Parametres i varibales auxiliars
-        double temperatura = 1;
-        final double coolingRate = 0.8;
+        double temperatura = 10;
+        final double coolingRate = 0.85;
         double modularitatActual = modularitat;
         double canviModularitat, millorCanvi, probAcceptacio, numAleatori;
         int numIteracions = 0;
