@@ -77,13 +77,13 @@ public class TADComunitats implements Iterable<HashMapIndirecte<Integer,Integer>
         try {
             // Comprovem que el vertex pertany a la comunitat en questio
             if (!comunitats.consultar(comunitat).buscar(vertexID)) { // No esta a la comunitat
-                throw new Error("Es demana esborrar un vertex d'una comunitat a la qual no pertany.");
+                throw new Error("Es demana esborrar el vertex " + vertexID + " de la comunitat " + comunitat + ", a la qual no pertany.");
             }
 
             // Accedim a la comunitat desitjada i esborrem el vertex
             comunitats.consultar(comunitat).esborrar(vertexID);
         } catch (ElementNoTrobat e) { // En cas que la comunitat o el vertex no existeixen
-            throw new Error("No s'ha trobat la comunitat o el vertex. (ESBORRAT)");
+            throw new Error("No s'ha trobat la comunitat. (ESBORRAT)");
         }
     }
 

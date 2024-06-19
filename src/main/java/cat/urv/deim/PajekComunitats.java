@@ -220,7 +220,7 @@ public class PajekComunitats {
     public void optimitzarModularitat(int tolerancia, int maxIteracions) {
         // Parametres i varibales auxiliars
         double temperatura = 500;
-        double coolingRate = 0.85;
+        final double coolingRate = 0.85;
         double modularitatActual = modularitat;
         double canviModularitat, millorCanvi, probAcceptacio, numAleatori;
         int numIteracions = 0;
@@ -230,13 +230,11 @@ public class PajekComunitats {
 
         // Bucle principal d'iteracions
         while (iterSenseCanvi < tolerancia && numIteracions < maxIteracions) {
-            // Inicialitzem varibales
-            millorCanvi = Double.NEGATIVE_INFINITY;
-
             // Iterem sobre tots els vertexs de la xarxa
             for (Integer vertexID : IDs) {
                 try {
-                    // Obtenim la comunitat actual del vertex
+                    // Inicialitzem varibales
+                    millorCanvi = Double.NEGATIVE_INFINITY;
                     comunitatVertex = xarxa.consultarVertex(vertexID);
                     millorComunitat = comunitatVertex;
 
@@ -295,6 +293,7 @@ public class PajekComunitats {
                     throw new Error("No es pot arribar a aquest error.");
                 }
             }
+            numIteracions++;
         }
 
         // Actualitzem la modularitat de la xarxa amb el resultat obtingut de la optimitzacio
