@@ -14,6 +14,8 @@ public interface IGraf<K, V, E>{
     // Metode per a obtenir el valor d'un vertex del graf a partir del seu identificador
     public V consultarVertex(K key) throws VertexNoTrobat;
 
+    public void modificarVertex(K key, V value) throws VertexNoTrobat;
+
     // Metode per a esborrar un vertex del graf a partir del seu identificador
     // Aquest metode tambe ha d'esborrar totes les arestes associades a aquest vertex
     public void esborrarVertex(K key) throws VertexNoTrobat;

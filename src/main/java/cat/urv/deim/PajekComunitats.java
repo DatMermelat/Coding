@@ -1,8 +1,6 @@
 package cat.urv.deim;
 
-import cat.urv.deim.exceptions.ElementNoTrobat;
 import cat.urv.deim.exceptions.VertexNoTrobat;
-import cat.urv.deim.exceptions.ArestaNoTrobada;
 import cat.urv.deim.exceptions.ComunitatNoTrobada;
 
 import java.io.BufferedReader;
@@ -11,21 +9,15 @@ import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 
-import java.util.Iterator;
-
-import javax.naming.CommunicationException;
-
-
 public class PajekComunitats {
     // Atributs
     private IGraf<Integer, Integer, Integer> xarxa;
     private TADComunitats comunitats;
-    private Double modularitat;
+    private double modularitat;
 
     // Constructor
     public PajekComunitats(int capacitat, String filename) {
         this.xarxa = new Graf<>(capacitat);
-        this.modularitat = null;
 
         // Lectura del fitxer (Pajek)
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -85,11 +77,17 @@ public class PajekComunitats {
         } catch (ComunitatNoTrobada e) {
             throw new Error("No s'hauria de poder arribar a aquest error (INICIALITZACIO COMUNITATS)");
         }
+
+        // Inicialitzem la modularitat
+        this.modularitat = calcularModularitat();
     }
 
     // Metodes
 
-    // Metode per consultar la particio en comunitats actual
+
+    //////////////// METODES DE CONSULTA //////////////////////
+
+    // Metode per consultar la estrucutra de comunitats actual
     public TADComunitats getTADComunitats() {
         return comunitats;
     }
@@ -101,12 +99,21 @@ public class PajekComunitats {
 
     // Metode per consultar la comunitat d'un vertex
     public Integer consultarComunitat(Integer vertexID) {
-        try{
+        try {
             return xarxa.consultarVertex(vertexID);
         } catch (VertexNoTrobat e) {
             throw new Error("S'ha consultat un vertex que no pertany a la xarxa");
         }
     }
+
+    // Metode per obtenir una llista amb els IDs dels vertexs
+    public ILlistaGenerica<Integer> obtenirVertexIDs() {
+        return xarxa.obtenirVertexIDs();
+    }
+
+
+    //////////////// CALCUL DE MODULARITAT //////////////////////
+
     // Metode per calcular la modularitat
     public double calcularModularitat() {
         double numArestes = (double) xarxa.numArestes();
@@ -137,7 +144,7 @@ public class PajekComunitats {
 
         try {
             // Accedim a la comunitat
-            IHashMap<Integer, Integer> comunitat = comunitats.getComunitat(c);
+            IHashMap<Integer, Integer> comunitat = comunitats.consultarComunitat(c);
 
             // Bucle per comptar les connexions intracomunitaries
             for (Integer vertexID : comunitat){
@@ -167,7 +174,7 @@ public class PajekComunitats {
 
         try {
             // Bucle per sumar els graus
-            for (Integer vertexID : comunitats.getComunitat(comunitat)) {
+            for (Integer vertexID : comunitats.consultarComunitat(comunitat)) {
                 suma += xarxa.numVeins(vertexID);
             }
             // Retornem la suma de graus
@@ -178,6 +185,10 @@ public class PajekComunitats {
             throw new ComunitatNoTrobada();
         }
     }
+
+
+
+    //////////////// GESTIO DE COMUNITATS //////////////////////
 
     // Metode per canviar un node de comunitat
     public void canviDeComunitat(Integer vertexID, Integer comunitat) throws VertexNoTrobat, ComunitatNoTrobada {
@@ -191,6 +202,9 @@ public class PajekComunitats {
             // Eliminem el vertex de la comunitat actual
             comunitats.eliminarVertex(vertexID, comunitatActual);
 
+            // Actualitzem la informacio guardada al vertex
+            xarxa.modificarVertex(vertexID, comunitat);
+
         } catch (VertexNoTrobat e) {
             throw new VertexNoTrobat();
         } catch (ComunitatNoTrobada e) {
@@ -198,10 +212,98 @@ public class PajekComunitats {
         }
     }
 
-    // Metode per obtenir una llista amb els IDs dels vertexs
-    public ILlistaGenerica<Integer> obtenirVertexIDs() {
-        return xarxa.obtenirVertexIDs();
+
+
+    //////////////// OPTIMITZACIO DE MODULARITAT //////////////////////
+
+    // Metode per optimitzar la modularitat de la xarxa
+    public void optimitzarModularitat(int tolerancia, int maxIteracions) {
+        // Parametres i varibales auxiliars
+        double temperatura = 500;
+        double coolingRate = 0.85;
+        double modularitatActual = modularitat;
+        double canviModularitat, millorCanvi, probAcceptacio, numAleatori;
+        int numIteracions = 0;
+        int iterSenseCanvi = 0;
+        Integer comunitatVertex, millorComunitat;
+        ILlistaGenerica<Integer> IDs = xarxa.obtenirVertexIDs();
+
+        // Bucle principal d'iteracions
+        while (iterSenseCanvi < tolerancia && numIteracions < maxIteracions) {
+            // Inicialitzem varibales
+            millorCanvi = Double.NEGATIVE_INFINITY;
+
+            // Iterem sobre tots els vertexs de la xarxa
+            for (Integer vertexID : IDs) {
+                try {
+                    // Obtenim la comunitat actual del vertex
+                    comunitatVertex = xarxa.consultarVertex(vertexID);
+                    millorComunitat = comunitatVertex;
+
+                    // Iterem sobre cada vei del vertex. Sortirem del bucle amb el millor canvi de modularitat
+                    for (Integer vei : xarxa.obtenirVeins(vertexID)) {
+                        // Comprovem que el vei sigui d'una altra comunitat
+                        if (xarxa.consultarVertex(vei) != comunitatVertex) { // El vei es d'una comunitat diferent
+                            // Passem el vertex actual a la comunitat del vei
+                            canviDeComunitat(vertexID, xarxa.consultarVertex(vei));
+
+                            // Calculem el canvi de modularitat
+                            canviModularitat = calcularModularitat() - modularitatActual;
+
+                            // Comprovem la qualitat del canvi
+                            if (canviModularitat > millorCanvi) { // El canvi es millor que el millor canvi actual
+                                // Actualitzem millor canvi
+                                millorCanvi = canviModularitat;
+
+                                // Guardem la comunitat associada al millor canvi de modularitat
+                                millorComunitat = xarxa.consultarVertex(vei);
+                            }
+                        }
+                    }
+
+                    // Calculem la probabilitat d'accpetar un canvi.
+                    // Si el canvi es positiu (bo), la probabilitat es sempre > 1
+                    // Si el canvi es negatiu (dolent), la probabilitat es < 1 i disminuira a mesura que acceptem mes canvis
+                    probAcceptacio = (double) Math.exp(millorCanvi / temperatura);
+
+                    // Generem un numero aleatori entre 0 i 1
+                    numAleatori = Math.random();
+
+                    // Estudiem el millor canvi que hem obtingut
+                    if (millorCanvi != 0 && numAleatori < probAcceptacio) { // Acceptem el canvi
+                        // Actualitzem la modularitat actual
+                        modularitatActual += millorCanvi;
+
+                        // Actualitzem la temperatura
+                        temperatura *= coolingRate;
+
+                        // Reiniciem el comptador d'iteracions sense canvi
+                        iterSenseCanvi = 0;
+
+                    } else { // No s'ha acceptat el canvi en la modularitat
+                        iterSenseCanvi++;
+                    }
+
+                    // Tornem el vertex a la comunitat corresponent.
+                    canviDeComunitat(vertexID, millorComunitat);
+
+                    // Gestio de memoria
+                    if (comunitats.consultarComunitat(comunitatVertex).esBuida()) { // Podem esborrar la comunitat original del vertex ja que es buida
+                        comunitats.eliminarComunitat(comunitatVertex);
+                    }
+                } catch (VertexNoTrobat | ComunitatNoTrobada e) {
+                    throw new Error("No es pot arribar a aquest error.");
+                }
+            }
+        }
+
+        // Actualitzem la modularitat de la xarxa amb el resultat obtingut de la optimitzacio
+        this.modularitat = modularitatActual;
     }
+
+
+
+    //////////////// CREACIO DE FITXER DE SORTIDA //////////////////////
 
     // Metode per generar un fitxer de sortida amb la particio en comunitats
     public void crearFitxer(String filename) {

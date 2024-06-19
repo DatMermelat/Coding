@@ -2,7 +2,6 @@ package cat.urv.deim;
 
 import java.util.Iterator;
 
-import javax.naming.CommunicationException;
 
 import cat.urv.deim.exceptions.ComunitatNoTrobada;
 import cat.urv.deim.exceptions.ElementNoTrobat;
@@ -15,12 +14,13 @@ public class TADComunitats implements Iterable<HashMapIndirecte<Integer,Integer>
     // Atributs
     private IHashMap<Integer,HashMapIndirecte<Integer,Integer>> comunitats;
     private int numComunitats;
-    private final int vertexsPerComunitat = 15; // Estimacio arbitraria de la quanitat de vertexs per comunitat. Modificar segons la mida de la xarxa
+    private final int vertexsPerComunitat; // Estimacio arbitraria de la quanitat de vertexs per comunitat. Modificar segons la mida de la xarxa
 
     // Constructor
     public TADComunitats(int maxComunitats) {
         this.comunitats = new HashMapIndirecte<>(maxComunitats);
         this.numComunitats = 0;
+        this.vertexsPerComunitat = 15;
     }
 
     // Metodes
@@ -31,13 +31,28 @@ public class TADComunitats implements Iterable<HashMapIndirecte<Integer,Integer>
         this.numComunitats++;
     }
 
+    // Metode per eliminar una comunitat buida
+    public void eliminarComunitat(Integer comunitat) throws ComunitatNoTrobada {
+        try {
+            // Comprovem que la comunitat estigui buida
+            if (this.comunitats.consultar(comunitat).esBuida()) {
+                this.comunitats.esborrar(comunitat);
+                this.numComunitats--;
+            } else {
+                throw new Error("Es vol esborrar una comunitat no buida!");
+            }
+        } catch (ElementNoTrobat e) {
+            throw new ComunitatNoTrobada();
+        }
+    }
+
     // Metode per consultar el nombre de comunitats
     public int numComunitats() {
         return this.numComunitats;
     }
 
     // Metode per accedir a una comunitat
-    public IHashMap<Integer,Integer> getComunitat(Integer comunitat) throws ComunitatNoTrobada {
+    public IHashMap<Integer,Integer> consultarComunitat(Integer comunitat) throws ComunitatNoTrobada {
         try {
             return this.comunitats.consultar(comunitat);
         } catch (ElementNoTrobat e) {
@@ -67,14 +82,6 @@ public class TADComunitats implements Iterable<HashMapIndirecte<Integer,Integer>
 
             // Accedim a la comunitat desitjada i esborrem el vertex
             comunitats.consultar(comunitat).esborrar(vertexID);
-
-            // Comprovem si queden vertexs a la comunitat
-            if (comunitats.consultar(comunitat).esBuida()) { // La comunitat es buida, la podem esborrar per estalviar espai
-                comunitats.esborrar(comunitat);
-
-                // Decrementem comptador de comunitats
-                numComunitats--;
-            }
         } catch (ElementNoTrobat e) { // En cas que la comunitat o el vertex no existeixen
             throw new Error("No s'ha trobat la comunitat o el vertex. (ESBORRAT)");
         }

@@ -32,6 +32,16 @@ public class Graf<K extends Comparable<K>, V, E> implements IGraf<K, V, E> {
         }
     }
 
+    // Metode per a modificar el valor d'un vertex
+    public void modificarVertex(K key, V value) throws VertexNoTrobat {
+        try{
+            VertexGraf<K,V,E> vertex = taulaVertexs.consultar(key);
+            vertex.info = value;
+        } catch (ElementNoTrobat e) {
+            throw new VertexNoTrobat();
+        }
+    }
+
     // Metode per a esborrar un vertex del graf a partir del seu identificador
     // Aquest metode tambe ha d'esborrar totes les arestes associades a aquest vertex
     public void esborrarVertex(K key) throws VertexNoTrobat {
