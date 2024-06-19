@@ -196,15 +196,16 @@ public class PajekComunitats {
             // Obtenim la comunitat actual del vertex
             Integer comunitatActual = xarxa.consultarVertex(vertexID);
 
-            // Afegim el vertex a la comunitat indicada
-            comunitats.afegirVertex(vertexID, comunitat);
+            if (comunitatActual != comunitat) { // Si el vertex no pertany a la comunitat indicada el movem
+                // Afegim el vertex a la comunitat indicada
+                comunitats.afegirVertex(vertexID, comunitat);
 
-            // Eliminem el vertex de la comunitat actual
-            comunitats.eliminarVertex(vertexID, comunitatActual);
+                // Eliminem el vertex de la comunitat actual
+                comunitats.eliminarVertex(vertexID, comunitatActual);
 
-            // Actualitzem la informacio guardada al vertex
-            xarxa.modificarVertex(vertexID, comunitat);
-
+                // Actualitzem la informacio guardada al vertex
+                xarxa.modificarVertex(vertexID, comunitat);
+            }
         } catch (VertexNoTrobat e) {
             throw new VertexNoTrobat();
         } catch (ComunitatNoTrobada e) {
@@ -219,13 +220,13 @@ public class PajekComunitats {
     // Metode per optimitzar la modularitat de la xarxa
     public void optimitzarModularitat(int tolerancia, int maxIteracions) {
         // Parametres i varibales auxiliars
-        double temperatura = 500;
-        final double coolingRate = 0.85;
+        double temperatura = 0.1;
+        final double coolingRate = 0.8;
         double modularitatActual = modularitat;
         double canviModularitat, millorCanvi, probAcceptacio, numAleatori;
         int numIteracions = 0;
         int iterSenseCanvi = 0;
-        Integer comunitatVertex, millorComunitat;
+        Integer comunitatVertex, comunitatVei, millorComunitat;
         ILlistaGenerica<Integer> IDs = xarxa.obtenirVertexIDs();
 
         // Bucle principal d'iteracions
@@ -240,8 +241,9 @@ public class PajekComunitats {
 
                     // Iterem sobre cada vei del vertex. Sortirem del bucle amb el millor canvi de modularitat
                     for (Integer vei : xarxa.obtenirVeins(vertexID)) {
+                        comunitatVei = xarxa.consultarVertex(vei);
                         // Comprovem que el vei sigui d'una altra comunitat
-                        if (xarxa.consultarVertex(vei) != comunitatVertex) { // El vei es d'una comunitat diferent
+                        if (comunitatVei != comunitatVertex) { // El vei es d'una comunitat diferent
                             // Passem el vertex actual a la comunitat del vei
                             canviDeComunitat(vertexID, xarxa.consultarVertex(vei));
 
@@ -278,19 +280,25 @@ public class PajekComunitats {
                         // Reiniciem el comptador d'iteracions sense canvi
                         iterSenseCanvi = 0;
 
+                        // Tornem el vertex a la comunitat corresponent.
+                        canviDeComunitat(vertexID, millorComunitat);
+
+                        // Gestio de memoria
+                        if (comunitats.consultarComunitat(comunitatVertex).esBuida()) { // Podem esborrar la comunitat original del vertex ja que es buida
+                            comunitats.eliminarComunitat(comunitatVertex);
+                        }
+
                     } else { // No s'ha acceptat el canvi en la modularitat
                         iterSenseCanvi++;
+
+                        // Tornem el vertex a la comunitat original
+                        canviDeComunitat(vertexID, comunitatVertex);
                     }
 
-                    // Tornem el vertex a la comunitat corresponent.
-                    canviDeComunitat(vertexID, millorComunitat);
-
-                    // Gestio de memoria
-                    if (comunitats.consultarComunitat(comunitatVertex).esBuida()) { // Podem esborrar la comunitat original del vertex ja que es buida
-                        comunitats.eliminarComunitat(comunitatVertex);
-                    }
-                } catch (VertexNoTrobat | ComunitatNoTrobada e) {
-                    throw new Error("No es pot arribar a aquest error.");
+                } catch (VertexNoTrobat e) {
+                    throw new Error("Iteracio: " + numIteracions + " (VertexNoTrobat)");
+                } catch (ComunitatNoTrobada e) {
+                    throw new Error("Iteracio: " + numIteracions + " (ComunitatNoTrobada), vertex:" + vertexID);
                 }
             }
             numIteracions++;

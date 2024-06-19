@@ -6,10 +6,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        PajekComunitats test = new PajekComunitats(15, "graph4+4.net");
+        PajekComunitats test = new PajekComunitats(15, "star.net");
 
-        test.optimitzarModularitat(10, 100);
+        test.optimitzarModularitat(100, 1000);
 
-        test.crearFitxer("graph4+4.net.out");
+        test.crearFitxer("star.clu");
     }
 }
